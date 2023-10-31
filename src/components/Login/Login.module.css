@@ -1,0 +1,14 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.tip {
+    margin-top: 1rem;
+}
+
+.link {
+    color: #2389fd;
+}

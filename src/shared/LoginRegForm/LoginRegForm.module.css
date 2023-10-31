@@ -1,0 +1,40 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 1rem;
+}
+
+.email,
+.password {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+
+    margin-bottom: 1rem;
+}
+
+.email input,
+.password input {
+    outline: none;
+
+    border: 2px solid #eee;
+    border-radius: 10px;
+
+    box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
+
+    height: 1.5rem;
+
+    padding: .2rem;
+    margin-top: 0.2rem;
+
+    font-size: inherit;
+}
+
+.email input:focus,
+.password input:focus {
+    border: 2px solid #2389fd;
+}

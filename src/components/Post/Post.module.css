@@ -1,0 +1,163 @@
+.postMulti {
+    width: 45rem;
+    height: 25rem;
+
+    margin-bottom: 2rem;
+
+    position: relative;
+
+    background: white;
+}
+
+.postSingle {
+    width: 45rem;
+
+    position: relative;
+
+    background: white;
+}
+
+.actionMenu {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    padding: 0 0.3rem;
+
+    border-radius: 5px;
+
+    background: rgba(204, 204, 204, 0.9);
+
+    display: flex;
+    align-items: center;
+
+}
+
+.edit {
+    font-size: 1.5rem;
+
+    margin-right: .5rem;
+
+    cursor: pointer;
+}
+
+.delete {
+    font-size: 1.5rem;
+
+    cursor: pointer;
+}
+
+.imgContainer {
+    overflow: hidden;
+
+    height: 60%;
+
+    border-radius: 5px 5px 0 0;
+}
+
+.img {
+    overflow: hidden;
+}
+
+.content {
+    height: 40%;
+
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+
+
+    box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.contentSingle {
+    padding-bottom: 1rem;
+}
+
+.author {
+    display: flex;
+
+    padding-top: 1rem;
+    padding-left: 0.5rem;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+
+    margin-right: 0.5rem;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.name {
+    font-size: 0.9rem;
+}
+
+.date {
+    font-size: 0.7rem;
+
+    color: #9d9d9d;
+}
+
+.headerContainer {
+    margin-top: .5rem;
+}
+
+.header {
+    padding-left: 3rem;
+
+    cursor: pointer;
+}
+
+.textContainer {
+    margin-top: .5rem;
+    margin-left: 3rem;
+}
+
+.text {
+
+}
+
+.tagsContainer {
+    margin-top: .4rem;
+    padding-left: 3rem;
+}
+
+.tagsContainer span {
+    font-size: 0.8rem;
+
+    color: #9d9d9d;
+
+    margin-right: 1rem;
+
+    cursor: pointer;
+}
+
+.reactions {
+    margin-top: 1rem;
+    padding-left: 3rem;
+
+    display: flex;
+    align-items: center;
+}
+
+.views,
+.comments {
+    display: flex;
+    align-items: center;
+
+    color: #9d9d9d;
+}
+
+.views {
+    margin-right: 1rem;
+}
+
+.views span,
+.comments span {
+    font-size: 0.8rem;
+}

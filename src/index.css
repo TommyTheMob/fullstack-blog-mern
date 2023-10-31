@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+
+  font-family: 'Roboto', sans-serif;
+}
+
+.tox-statusbar__branding,
+.tox-statusbar__path-item {
+  visibility: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

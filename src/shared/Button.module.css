@@ -1,0 +1,42 @@
+.btn {
+    height: 2rem;
+    min-width: 5rem;
+
+    padding: 0 0.4rem;
+
+    border: 2px solid #ccc;
+    border-radius: 5px;
+
+    background: white;
+
+    color: #ccc;
+    font-weight: 500;
+
+    box-shadow: 1px 1px 4px 1px #ccc;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.primary {
+    border: 2px solid #2389fd;
+    background: #2389fd;
+    color: white;
+}
+
+.primary:hover {
+    background: white;
+    color: #2389fd;
+}
+
+.primaryOutlined {
+    border: 2px solid #2389fd;
+    background: white;
+    color: #2389fd;
+}
+
+.primaryOutlined:hover {
+    background: #2389fd;
+    color: white;
+}

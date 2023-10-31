@@ -1,0 +1,96 @@
+.pageContent {
+    height: 100vh;
+    background: rgba(204, 204, 204, 0.2);
+}
+
+.pageContentWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+.addPost {
+    margin-top: 2rem;
+    padding: 1rem;
+    padding-top: 0;
+
+    width: 45rem;
+
+    background: white;
+
+    box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
+
+    border: 2px solid #eee;
+    border-radius: 5px;
+}
+
+.picture {
+
+}
+
+.input {
+
+}
+
+.hidden {
+    opacity: 0;
+    height: 0;
+    width: 0;
+    line-height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+.picker {
+    height: 3rem;
+
+    border: 2px dotted #ccc;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.header,
+.tags {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+
+    margin-top: 1rem;
+}
+
+.header input,
+.tags input {
+    outline: none;
+
+    font-size: inherit;
+
+    padding: 0.2rem;
+
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.text {
+    margin-top: 1rem;
+
+    border-radius: 10px;
+}
+
+.editor {
+    margin-top: .5rem;
+
+    border-radius: 10px;
+    box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.createBtn {
+    margin-top: 1rem;
+    margin-right: .5rem;
+}
+
+.cancelBtn {}

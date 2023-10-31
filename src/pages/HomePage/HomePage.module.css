@@ -1,0 +1,19 @@
+.pageContent {
+    background: rgba(204, 204, 204, 0.2);
+}
+
+.pageContentWrapper {
+    padding-top: 5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+.posts {
+    margin-right: 3rem;
+}
+
+.side {
+    width: 20rem;
+}
