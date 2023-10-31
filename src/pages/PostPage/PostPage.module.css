@@ -1,6 +1,4 @@
 .pageContent {
-    background: rgba(204, 204, 204, 0.2);
-
     display: flex;
     justify-content: center;
     align-items: start;
@@ -12,10 +10,9 @@
 
     display: flex;
     justify-content: start;
-    align-items: center;
     flex-direction: column;
 
-    width: 45rem;
+    width: auto;
 }
 
 .post {
@@ -23,5 +20,4 @@
 }
 
 .comments {
-    width: 45rem;
 }

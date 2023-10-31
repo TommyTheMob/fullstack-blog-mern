@@ -5,8 +5,18 @@ import PostPage from "./pages/PostPage/PostPage.jsx";
 import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage/RegisterPage.jsx";
 import AddPost from "./pages/AddPost/AddPost.jsx";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {fetchAuthMe, selectIsAuth} from "./redux/slices/authSlice.js";
 
 function App() {
+    const dispatch = useDispatch()
+    const isAuth = useSelector(selectIsAuth)
+
+    useEffect(() => {
+        dispatch(fetchAuthMe())
+    }, [])
+
     return (
         <>
             <Navbar/>

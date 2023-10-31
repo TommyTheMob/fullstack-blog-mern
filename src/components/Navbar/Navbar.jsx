@@ -5,8 +5,12 @@ import classNames from "classnames";
 import {Link, Outlet} from "react-router-dom";
 
 import logo from '../../assets/blog-logo.svg'
+import {useDispatch, useSelector} from "react-redux";
+import {logout, selectIsAuth} from "../../redux/slices/authSlice.js";
 
 const Navbar = () => {
+    const dispatch = useDispatch()
+    const isAuth = useSelector(selectIsAuth)
 
     return (
         <>
@@ -20,16 +24,42 @@ const Navbar = () => {
                         />
                     </Link>
                     <div className={styles.btns}>
-                        <Link to='/login'>
-                            <button className={classNames(btnStyles.btn, btnStyles.primaryOutlined, styles.loginBtn)}>Войти</button>
-                        </Link>
-                        <Link to='/register'>
-                            <button className={classNames(btnStyles.btn, btnStyles.primary, styles.createAccBtn)}>Создать аккаунт</button>
-                        </Link>
+                        {isAuth
+                            ?
+                            <>
+                                <Link to='/add'>
+                                    <button
+                                        className={classNames(btnStyles.btn, btnStyles.primary, styles.loginBtn)}>Написать
+                                        статью
+                                    </button>
+                                </Link>
+                                <button
+                                    className={classNames(btnStyles.btn, btnStyles.primaryOutlined, styles.createAccBtn)}
+                                    onClick={() => dispatch(logout())}
+                                >
+                                    Выйти
+                                </button>
+
+                            </>
+                            :
+                            <>
+                                <Link to='/login'>
+                                    <button
+                                        className={classNames(btnStyles.btn, btnStyles.primaryOutlined, styles.loginBtn)}>Войти
+                                    </button>
+                                </Link>
+                                <Link to='/register'>
+                                    <button
+                                        className={classNames(btnStyles.btn, btnStyles.primary, styles.createAccBtn)}>Создать
+                                        аккаунт
+                                    </button>
+                                </Link>
+                            </>
+                        }
                     </div>
                 </div>
             </header>
-            <Outlet />
+            <Outlet/>
         </>
 
     );

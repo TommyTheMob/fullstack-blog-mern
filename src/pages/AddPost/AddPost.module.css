@@ -1,6 +1,5 @@
 .pageContent {
-    height: 100vh;
-    background: rgba(204, 204, 204, 0.2);
+
 }
 
 .pageContentWrapper {
@@ -10,7 +9,7 @@
 }
 
 .addPost {
-    margin-top: 2rem;
+    margin: 2rem 0;
     padding: 1rem;
     padding-top: 0;
 
@@ -26,6 +25,20 @@
 
 .picture {
 
+}
+
+.imgContainer {
+    margin: .5rem 0;
+
+    width: inherit;
+    height: auto;
+    max-height: 600px;
+
+    overflow: hidden;
+}
+
+.imgContainer img {
+    width: 800px;
 }
 
 .input {
@@ -52,6 +65,16 @@
     align-items: center;
 
     cursor: pointer;
+
+    transition: .2s;
+}
+
+.picker:hover {
+    border: 2px dotted #2389fd;
+
+    color: #2389fd;
+
+    font-size: 1.2rem;
 }
 
 .header,

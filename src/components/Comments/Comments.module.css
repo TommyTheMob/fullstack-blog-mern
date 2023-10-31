@@ -1,7 +1,7 @@
 .comments {
     margin-top: 2rem;
 
-    padding-bottom: 1rem;
+    padding: 1rem;
 
     border-radius: 5px;
     border: 2px solid #eee;
@@ -16,11 +16,9 @@
 }
 
 .headerRow {
-    margin-top: 1rem;
 }
 
 .header {
-    padding-left: 1rem;
 }
 
 .commentRows {
@@ -32,7 +30,6 @@
     align-items: center;
 
     margin-top: 1rem;
-    margin-left: 1rem;
 }
 
 .avatar {

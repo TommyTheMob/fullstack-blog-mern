@@ -10,6 +10,10 @@
   visibility: hidden;
 }
 
+body {
+  background: rgba(204, 204, 204, 0.2);
+}
+
 a {
   text-decoration: none;
   color: inherit;

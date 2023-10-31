@@ -1,6 +1,6 @@
 .postMulti {
     width: 45rem;
-    height: 25rem;
+    height: auto;
 
     margin-bottom: 2rem;
 
@@ -9,12 +9,14 @@
     background: white;
 }
 
-.postSingle {
-    width: 45rem;
 
+.postSingle {
     position: relative;
 
     background: white;
+
+    width: auto;
+    max-width: 1024px;
 }
 
 .actionMenu {
@@ -26,11 +28,26 @@
 
     border-radius: 5px;
 
-    background: rgba(204, 204, 204, 0.9);
+    background: #eee;
 
     display: flex;
     align-items: center;
 
+    transform: translateX(0);
+
+    transition: .2s;
+}
+
+.hidden {
+    opacity: 0;
+    height: 0;
+    width: 0;
+    line-height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+
+    transform: translateX(50px);
 }
 
 .edit {
@@ -51,20 +68,30 @@
     overflow: hidden;
 
     height: 60%;
+    max-height: 768px;
 
     border-radius: 5px 5px 0 0;
 }
 
 .img {
-    overflow: hidden;
+    width: 1024px;
+}
+
+.imgContainerMulti {
+    max-height: 768px;
+}
+
+.imgMulti {
+    max-width: 100%;
 }
 
 .content {
     height: 40%;
 
+    padding: 1rem;
+
     border-top: none;
     border-radius: 0 0 5px 5px;
-
 
     box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
 }
@@ -76,8 +103,6 @@
 .author {
     display: flex;
 
-    padding-top: 1rem;
-    padding-left: 0.5rem;
 }
 
 .avatar {
@@ -109,17 +134,15 @@
 
 .header {
     padding-left: 3rem;
-
-    cursor: pointer;
 }
 
 .textContainer {
     margin-top: .5rem;
     margin-left: 3rem;
+
 }
 
 .text {
-
 }
 
 .tagsContainer {
@@ -133,8 +156,6 @@
     color: #9d9d9d;
 
     margin-right: 1rem;
-
-    cursor: pointer;
 }
 
 .reactions {
