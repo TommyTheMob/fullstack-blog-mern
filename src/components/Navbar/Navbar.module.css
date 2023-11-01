@@ -24,7 +24,25 @@
     height: 50px;
 
     filter: invert(46%) sepia(45%) saturate(4711%) hue-rotate(196deg) brightness(101%) contrast(98%);
+}
 
+.userInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    margin-right: .5rem;
+}
+
+.name {
+    color: #9d9d9d;
 }
 
 .btns {

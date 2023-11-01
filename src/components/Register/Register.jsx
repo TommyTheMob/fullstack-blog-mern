@@ -16,8 +16,8 @@ const Register = () => {
         }
     }, [isAuth])
 
-    const onRegister = async (email, password, fullName) => {
-        const data = await dispatch(fetchRegister({email, password, fullName}))
+    const onRegister = async (email, password, fullName, avatarUrl) => {
+        const data = await dispatch(fetchRegister({email, password, fullName, avatarUrl}))
 
         if (!data.payload) {
             return alert('Не удалось зарегистрироваться')

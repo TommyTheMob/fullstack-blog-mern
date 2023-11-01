@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './Navbar.module.css'
 import btnStyles from '../../shared/Button.module.css'
 import classNames from "classnames";
@@ -11,6 +11,7 @@ import {logout, selectIsAuth} from "../../redux/slices/authSlice.js";
 const Navbar = () => {
     const dispatch = useDispatch()
     const isAuth = useSelector(selectIsAuth)
+    const userData = useSelector(state => state.auth.data)
 
     return (
         <>
@@ -23,6 +24,16 @@ const Navbar = () => {
                             alt="logo"
                         />
                     </Link>
+                    {isAuth &&
+                        <div className={styles.userInfo}>
+                            <img
+                                className={styles.avatar}
+                                src={userData?.avatarUrl ? `http://localhost:4444${userData.avatarUrl}` : 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'}
+                                alt="user avatar"
+                            />
+                            <span className={styles.name}>{userData?.fullName}</span>
+                        </div>
+                    }
                     <div className={styles.btns}>
                         {isAuth
                             ?

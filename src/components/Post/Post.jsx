@@ -57,7 +57,7 @@ const Post = ({single, post, isOwner}) => {
                     <div className={styles.author}>
                         <img
                             className={styles.avatar}
-                            src={post.user.avatarUrl ? `${post.user.avatarUrl}` : "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"}
+                            src={post.user.avatarUrl ? `http://localhost:4444${post.user.avatarUrl}` : "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"}
                             alt="avatar"
                         />
                         <div className={styles.info}>

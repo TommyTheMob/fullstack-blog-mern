@@ -18,7 +18,7 @@
 }
 
 .name {
-    margin-top: 1rem;
+
 }
 
 .email,
@@ -57,4 +57,73 @@
 
 .btn {
     margin-top: 1rem;
+}
+
+.avatar {
+    position: relative;
+
+    cursor: pointer;
+
+    margin-top: 1rem;
+}
+
+.avatar img {
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+}
+
+.avatarTip {
+    position: absolute;
+    right: 32%;
+    top: 30%;
+
+    font-size: 3rem;
+
+    border-radius: 50%;
+
+    padding: 0 .9rem;
+
+    color: #ffffff;
+
+    transform: scale(0);
+
+    transition: .2s;
+}
+
+.avatarDelete {
+    position: absolute;
+    right: 30%;
+    top: 30%;
+
+    font-size: 3rem;
+
+    border-radius: 50%;
+
+    padding: .5rem .5rem;
+
+    color: #ffffff;
+
+    transform: scale(0);
+
+    transition: .2s;
+}
+
+.visible {
+    transform: scale(1);
+
+    background: rgba(204, 204, 204, 0.95);
+}
+
+.hidden {
+    opacity: 0;
+    height: 0;
+    width: 0;
+    line-height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
 }
