@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styles from './Post.module.css'
 import {AiFillEdit, AiOutlineClose, AiOutlineEye} from "react-icons/ai";
 import {PiChatTextLight} from "react-icons/pi";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {parseISO, formatDistanceToNow} from 'date-fns';
 import classNames from "classnames";
 import {useDispatch} from "react-redux";
@@ -10,6 +10,8 @@ import {fetchDeletePost} from "../../redux/slices/postsSlice.js";
 
 const Post = ({single, post, isOwner}) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const [menuVisible, setMenuVisible] = useState(false)
 
     let timeAgo = ``
@@ -22,6 +24,7 @@ const Post = ({single, post, isOwner}) => {
     const onDeletePostClick = () => {
         if (window.confirm('Удалить статью?')) {
             dispatch(fetchDeletePost(post._id))
+            navigate('/')
         }
     }
 
@@ -29,15 +32,9 @@ const Post = ({single, post, isOwner}) => {
         <>
             <div
                 className={single ? styles.postSingle : styles.postMulti}
-                style={
-                    !post.imageUrl ? {height: 'auto'} : {}
-                }
-                onMouseEnter={() => {
-                    setMenuVisible(prevState => !prevState)
-                }}
-                onMouseLeave={() => {
-                    setMenuVisible(prevState => !prevState)
-                }}
+                style={!post.imageUrl ? {height: 'auto'} : {}}
+                onMouseEnter={() => setMenuVisible(prevState => !prevState)}
+                onMouseLeave={() => setMenuVisible(prevState => !prevState)}
             >
                 <div className={menuVisible && isOwner ? styles.actionMenu : classNames(styles.actionMenu, styles.hidden)}>
                     <Link to={`/posts/${post._id}/edit`}>
@@ -60,7 +57,7 @@ const Post = ({single, post, isOwner}) => {
                     <div className={styles.author}>
                         <img
                             className={styles.avatar}
-                            src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png"
+                            src={post.user.avatarUrl ? `${post.user.avatarUrl}` : "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"}
                             alt="avatar"
                         />
                         <div className={styles.info}>

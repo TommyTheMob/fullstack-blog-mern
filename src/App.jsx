@@ -21,11 +21,12 @@ function App() {
         <>
             <Navbar/>
             <Routes>
-                <Route path='/' element={<HomePage/>} />
-                <Route path='/posts/:id' element={<PostPage/>} />
+                <Route path='/' element={<HomePage />} />
+                <Route path='/posts/:id' element={<PostPage />} />
+                <Route path='/posts/:id/edit' element={<AddPost />} />
                 <Route path='/login' element={<LoginPage />} />
                 <Route path='/register' element={<RegisterPage />} />
-                <Route path='/add' element={<AddPost />} />
+                <Route path='/add-post' element={<AddPost />} />
             </Routes>
         </>
     )

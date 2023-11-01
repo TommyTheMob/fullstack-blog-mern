@@ -5,16 +5,20 @@ import {Editor} from "@tinymce/tinymce-react";
 import classNames from "classnames";
 import {useSelector} from "react-redux";
 import {selectIsAuth} from "../../redux/slices/authSlice.js";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "../../axios.js";
 
 const AddPost = () => {
     const isAuth = useSelector(selectIsAuth)
+
     const navigate = useNavigate()
+    const { id } = useParams()
 
     const filePicker = useRef(null)
 
     const [isPostUploading, setIsPostUploading] = useState(false);
+
+    const isEditing = Boolean(id)
 
     const [text, setText] = useState('')
     const [title, setTitle] = useState('')
@@ -26,6 +30,22 @@ const AddPost = () => {
             navigate('/')
         }
     }, [isAuth])
+
+    useEffect(() => {
+        if (id) {
+            axios.get(`/posts/${id}`)
+                .then(({ data }) => {
+                    setTitle(data.title)
+                    setText(data.text)
+                    setTags(data.tags.join(', '))
+                    setImageUrl(data.imageUrl)
+                })
+                .catch(err => {
+                    console.warn(err)
+                    alert('Ошибка при получении статьи!')
+                })
+        }
+    }, [])
 
     const onInputFileChange = async (e) => {
         try {
@@ -49,10 +69,12 @@ const AddPost = () => {
             setIsPostUploading(true)
 
             const fields = {title, text, imageUrl, tags: tags.split(/,\s*/)}
-            const { data } = await axios.post('/posts', fields)
+            const { data } = isEditing
+                ? await axios.patch(`/posts/${id}`, fields)
+                : await axios.post('/posts', fields)
 
-            const id = data._id
-            navigate(`/posts/${id}`)
+            const _id = isEditing ? id : data._id
+            navigate(`/posts/${_id}`)
         } catch (err) {
             console.warn(err)
             alert('Ошибка при создании статьи')
@@ -130,7 +152,7 @@ const AddPost = () => {
                         className={classNames(btnStyles.btn, btnStyles.primary, styles.createBtn)}
                         onClick={onSaveBtnClick}
                     >
-                        Опубликовать
+                        {isEditing ? 'Сохранить' : 'Опубликовать'}
                     </button>
                     <button className={classNames(btnStyles.btn, btnStyles.primaryOutlined, styles.cancelBtn)}>Отмена</button>
                 </div>

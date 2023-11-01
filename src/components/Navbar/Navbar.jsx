@@ -27,10 +27,11 @@ const Navbar = () => {
                         {isAuth
                             ?
                             <>
-                                <Link to='/add'>
+                                <Link to='/add-post'>
                                     <button
-                                        className={classNames(btnStyles.btn, btnStyles.primary, styles.loginBtn)}>Написать
-                                        статью
+                                        className={classNames(btnStyles.btn, btnStyles.primary, styles.loginBtn)}
+                                    >
+                                        Написать статью
                                     </button>
                                 </Link>
                                 <button
@@ -45,13 +46,16 @@ const Navbar = () => {
                             <>
                                 <Link to='/login'>
                                     <button
-                                        className={classNames(btnStyles.btn, btnStyles.primaryOutlined, styles.loginBtn)}>Войти
+                                        className={classNames(btnStyles.btn, btnStyles.primaryOutlined, styles.loginBtn)}
+                                    >
+                                        Войти
                                     </button>
                                 </Link>
                                 <Link to='/register'>
                                     <button
-                                        className={classNames(btnStyles.btn, btnStyles.primary, styles.createAccBtn)}>Создать
-                                        аккаунт
+                                        className={classNames(btnStyles.btn, btnStyles.primary, styles.createAccBtn)}
+                                    >
+                                        Создать аккаунт
                                     </button>
                                 </Link>
                             </>
