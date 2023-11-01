@@ -3,13 +3,19 @@ import mongoose from "mongoose"
 import multer from "multer"
 import cors from 'cors'
 
+import { config } from 'dotenv';
+
 import {registerValidation, loginValidation, postCreateValidation} from './validations.js'
 
 import {UserController, PostController} from "./controllers/index.js"
 
 import {handleValidationErrors, checkAuth} from "./utils/index.js";
 
-mongoose.connect('mongodb+srv://admin:admin@cluster0.mng0ymd.mongodb.net/blog?retryWrites=true&w=majority')
+config()
+
+const dbConnect = process.env.DATABASE_CONNECT_LINK
+
+mongoose.connect(dbConnect)
     .then(() => console.log('Database OK'))
     .catch((err) => console.log('DB Error', err))
 
