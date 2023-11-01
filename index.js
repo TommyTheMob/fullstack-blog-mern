@@ -7,9 +7,10 @@ import { config } from 'dotenv';
 
 import {registerValidation, loginValidation, postCreateValidation} from './validations.js'
 
-import {UserController, PostController} from "./controllers/index.js"
+import {UserController, PostController, CommentController} from "./controllers/index.js"
 
 import {handleValidationErrors, checkAuth} from "./utils/index.js";
+import {create} from "./controllers/CommentController.js";
 
 config()
 
@@ -40,7 +41,7 @@ app.post('/auth/login', loginValidation, handleValidationErrors, UserController.
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register)
 app.get('/auth/me', checkAuth, UserController.getMe)
 
-app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+app.post('/upload', upload.single('image'), (req, res) => {
     res.json({
         url: `/uploads/${req.file.originalname}`
     })
@@ -54,6 +55,9 @@ app.get('/posts/:id', PostController.getOne)
 app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create)
 app.delete('/posts/:id', checkAuth, PostController.remove)
 app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors, PostController.update)
+
+app.post('/comments', CommentController.getPostComments)
+app.post('/comments', CommentController.create)
 
 app.listen(4444, (err) => {
     if (err) {
