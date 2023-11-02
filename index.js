@@ -10,7 +10,6 @@ import {registerValidation, loginValidation, postCreateValidation, commentCreate
 import {UserController, PostController, CommentController} from "./controllers/index.js"
 
 import {handleValidationErrors, checkAuth} from "./utils/index.js";
-import {create} from "./controllers/CommentController.js";
 
 config()
 
@@ -57,7 +56,8 @@ app.delete('/posts/:id', checkAuth, PostController.remove)
 app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors, PostController.update)
 
 app.get('/comments/:postId', CommentController.getPostComments)
-app.post('/comments', checkAuth, commentCreateValidation, CommentController.create)
+app.get('/comments', CommentController.getLastComments)
+app.post('/comments/:postId', checkAuth, commentCreateValidation, CommentController.create)
 app.delete('/comments/:commentId', checkAuth, CommentController.remove)
 app.patch('/comments/:commentId', checkAuth, commentCreateValidation, CommentController. update)
 

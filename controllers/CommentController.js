@@ -5,6 +5,8 @@ export const getPostComments = async (req, res) => {
         const postId = req.params.postId
         const comments = await CommentModel.find({post: postId}).populate('user')
 
+        comments.sort((a, b) => b.createdAt.toISOString().localeCompare(a.createdAt.toISOString()))
+
         res.json(comments)
     } catch (err) {
         console.log(err)
@@ -16,10 +18,12 @@ export const getPostComments = async (req, res) => {
 
 export const create = async (req, res) => {
     try {
+        const postId = req.params.postId
+
         const doc = new CommentModel({
             text: req.body.text,
             user: req.userId,
-            post: req.body.postId
+            post: postId
         })
 
         const comment = await doc.save()
@@ -81,4 +85,17 @@ export const update = (req, res) => {
             message: 'Не удалось удалить комментарий'
         })
     })
+}
+
+export const getLastComments = async (req, res) => {
+    try {
+        const comments = await CommentModel.find().limit(5).populate('user')
+
+        res.json(comments)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Не удалось получить комментарии'
+        })
+    }
 }
