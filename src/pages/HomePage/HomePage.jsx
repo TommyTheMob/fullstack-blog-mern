@@ -3,7 +3,6 @@ import styles from './HomePage.module.css'
 import Post from "../../components/Post/Post.jsx";
 import Tags from "../../components/Tags/Tags.jsx";
 import Comments from "../../components/Comments/Comments.jsx";
-import axios from '../../axios.js'
 import {useDispatch, useSelector} from "react-redux";
 import {fetchPosts, fetchTags} from "../../redux/slices/postsSlice.js";
 import PostSkeleton from "../../components/PostSkeleton/PostSkeleton.jsx";
@@ -32,8 +31,8 @@ const HomePage = () => {
                         ))
                         :
                         posts.items.map(post => {
-                            console.log(post._id)
-                            return <Post key={post._id} post={post} isOwner={userData?._id === post.user._id}/>
+                                console.log(post._id)
+                                return <Post key={post._id} post={post} isOwner={userData?._id === post.user._id}/>
                             }
                         )
                     }
