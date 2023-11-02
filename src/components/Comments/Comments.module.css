@@ -1,4 +1,6 @@
 .comments {
+    max-width: 1024px;
+
     margin-top: 2rem;
 
     padding: 1rem;
@@ -25,20 +27,74 @@
 
 }
 
+.actionMenu {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    padding: 0 0.3rem;
+
+    border-radius: 5px;
+
+    background: #eee;
+
+    display: flex;
+    align-items: center;
+
+    transform: translateX(0);
+
+    transition: .2s;
+}
+
+.hidden {
+    opacity: 0;
+    height: 0;
+    width: 0;
+    line-height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+
+    transform: translateX(50px);
+}
+
+.edit {
+    font-size: 1.5rem;
+
+    margin-right: .5rem;
+
+    cursor: pointer;
+}
+
+.delete {
+    font-size: 1.5rem;
+
+    cursor: pointer;
+}
+
 .commentRow {
     display: flex;
     align-items: center;
 
+    position: relative;
+
     margin-top: 1rem;
+
+    padding: .5rem;
+
+    border: 2px solid #eee;
+    border-radius: 5px;
+
+    box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
 }
 
 .avatar {
-    width: 45px;
-    height: 45px;
-
-    align-self: start;
+    width: 50px;
+    height: 50px;
 
     margin-right: 0.5rem;
+
+    border-radius: 50%;
 }
 
 .content {
@@ -47,12 +103,36 @@
 
 }
 
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
 .name {
+
+}
+
+.date {
     font-size: 0.9rem;
+
+    font-style: italic;
+
+    color: #9d9d9d;
 }
 
 .text {
-    font-size: 0.8rem;
+    margin-top: .5rem;
+    margin-bottom: .2rem;
+}
 
-    color: #9d9d9d;
+.editor {
+    margin-top: 1rem;
+
+    border-radius: 10px;
+    box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.sendBtn {
+    margin-top: 1rem;
+    margin-right: .5rem;
 }

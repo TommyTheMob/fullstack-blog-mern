@@ -33,8 +33,8 @@ const Post = ({single, post, isOwner}) => {
             <div
                 className={single ? styles.postSingle : styles.postMulti}
                 style={!post.imageUrl ? {height: 'auto'} : {}}
-                onMouseEnter={() => setMenuVisible(prevState => !prevState)}
-                onMouseLeave={() => setMenuVisible(prevState => !prevState)}
+                onMouseEnter={() => setMenuVisible(true)}
+                onMouseLeave={() => setMenuVisible(false)}
             >
                 <div className={menuVisible && isOwner ? styles.actionMenu : classNames(styles.actionMenu, styles.hidden)}>
                     <Link to={`/posts/${post._id}/edit`}>

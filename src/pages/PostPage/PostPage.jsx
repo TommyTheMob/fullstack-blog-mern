@@ -34,7 +34,7 @@ const PostPage = () => {
                 </section>
                 <section className={styles.comments}>
                     <AddComment />
-                    <Comments single={true} />
+                    <Comments inPost={true} postId={id} />
                 </section>
             </div>
         </main>

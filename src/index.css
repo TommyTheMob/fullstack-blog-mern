@@ -18,3 +18,11 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+blockquote {
+  padding: .2rem;
+
+  background: rgba(157, 157, 157, 0.1);
+
+  border-radius: 5px;
+}
