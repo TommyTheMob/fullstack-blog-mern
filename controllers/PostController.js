@@ -37,7 +37,7 @@ export const getOne = (req, res) => {
             $inc: {viewsCount: 1}
         },
         {returnDocument: 'after'}
-    ).populate('user').exec().then((doc) => {
+    ).populate('user').then((doc) => {
         if (!doc) {
             return res.status(403).json({
                 message: 'Запрашиваемая статья не найдена'

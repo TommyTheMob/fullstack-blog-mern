@@ -5,7 +5,7 @@ import cors from 'cors'
 
 import { config } from 'dotenv';
 
-import {registerValidation, loginValidation, postCreateValidation} from './validations.js'
+import {registerValidation, loginValidation, postCreateValidation, commentCreateValidation} from './validations.js'
 
 import {UserController, PostController, CommentController} from "./controllers/index.js"
 
@@ -56,8 +56,10 @@ app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, Post
 app.delete('/posts/:id', checkAuth, PostController.remove)
 app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors, PostController.update)
 
-app.post('/comments', CommentController.getPostComments)
-app.post('/comments', CommentController.create)
+app.get('/comments/:postId', CommentController.getPostComments)
+app.post('/comments', checkAuth, commentCreateValidation, CommentController.create)
+app.delete('/comments/:commentId', checkAuth, CommentController.remove)
+app.patch('/comments/:commentId', checkAuth, commentCreateValidation, CommentController. update)
 
 app.listen(4444, (err) => {
     if (err) {
