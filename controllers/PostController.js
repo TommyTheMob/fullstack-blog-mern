@@ -3,9 +3,11 @@ import CommentModel from '../models/Comment.js'
 
 export const getLastTags = async (req, res) => {
     try {
-        const posts = await PostModel.find().limit(5).exec()
+        const posts = await PostModel.find().exec()
 
-        const tags = posts.map(obj => obj.tags).flat().slice(0, 5)
+        const sorted = posts.sort((a, b) => b.createdAt.toISOString().localeCompare(a.createdAt.toISOString())).slice(0, 5)
+
+        const tags = sorted.map(obj => obj.tags).flat().slice(0, 5)
 
         res.json(tags)
     } catch (err) {
@@ -18,11 +20,30 @@ export const getLastTags = async (req, res) => {
 
 export const getAll = async (req, res) => {
     try {
+        const sortType = req.params.sortType
+
         const posts = await PostModel.find().populate('user').exec()
 
-        posts.sort((a, b) => b.createdAt.toISOString().localeCompare(a.createdAt.toISOString()))
+        let result
+        switch (sortType) {
+            case 'new':
+                result = posts.sort((a, b) => b.createdAt.toISOString().localeCompare(a.createdAt.toISOString()))
+                break
+            case 'pop':
+                result = posts.sort((a, b) => {
+                    if (a.viewsCount === b.viewsCount) {
+                        return b.createdAt.toISOString().localeCompare(a.createdAt.toISOString())
+                    }
+                    return b.viewsCount - a.viewsCount
+                })
+                break
+            default:
+                const tag = sortType
+                result = posts.filter(post => post.tags.includes(tag)).sort((a, b) => b.createdAt.toISOString().localeCompare(a.createdAt.toISOString()))
+                break
+        }
 
-        res.json(posts)
+        res.json(result)
     } catch (err) {
         console.log(err)
         res.status(500).json({
