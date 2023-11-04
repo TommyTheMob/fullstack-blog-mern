@@ -1,4 +1,5 @@
 import PostModel from '../models/Post.js'
+import CommentModel from '../models/Comment.js'
 
 export const getLastTags = async (req, res) => {
     try {
@@ -19,7 +20,7 @@ export const getAll = async (req, res) => {
     try {
         const posts = await PostModel.find().populate('user').exec()
 
-        // posts.sort((a, b) => b.createdAt.toISOString().localeCompare(a.createdAt.toISOString()))
+        posts.sort((a, b) => b.createdAt.toISOString().localeCompare(a.createdAt.toISOString()))
 
         res.json(posts)
     } catch (err) {
@@ -57,28 +58,48 @@ export const getOne = (req, res) => {
     })
 }
 
-export const remove = (req, res) => {
+export const remove = async (req, res) => {
+    try {
+        const postId = req.params.id
 
-    const postId = req.params.id
-
-    PostModel.findOneAndRemove(
-        {_id: postId}
-    ).then(doc => {
-        if (!doc) {
-            return res.status(403).json({
-                message: 'Запрашиваемая статья не найдена'
-            })
+        const removingPost = await PostModel.findOneAndRemove({_id: postId})
+        if (!removingPost) {
+            res.status(403).json({ message: 'Статья не найдена' })
         }
 
-        res.json({
-            success: true
-        })
-    }).catch(err => {
+        const removingPostComments = await CommentModel.deleteMany({ post: postId })
+        if (!removingPostComments) {
+            res.status(204).json({ message: 'Нет комментариев' })
+        }
+
+        res.json({ success: 'true' })
+    } catch (err) {
         console.log(err)
         return res.status(500).json({
             message: 'Не удалось удалить статью'
         })
-    })
+    }
+
+    // const postId = req.params.id
+    //
+    // PostModel.findOneAndRemove(
+    //     {_id: postId}
+    // ).then(doc => {
+    //     if (!doc) {
+    //         return res.status(403).json({
+    //             message: 'Запрашиваемая статья не найдена'
+    //         })
+    //     }
+    //
+    //     res.json({
+    //         success: true
+    //     })
+    // }).catch(err => {
+    //     console.log(err)
+    //     return res.status(500).json({
+    //         message: 'Не удалось удалить статью'
+    //     })
+    // })
 
 }
 
