@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Tags.module.css'
 import {PiHashBold} from "react-icons/pi";
 import Loader from "../../shared/Loader/Loader.jsx";
+import classNames from "classnames";
 
 const Tags = ({tags, isTagsLoading}) => {
 
@@ -12,14 +13,12 @@ const Tags = ({tags, isTagsLoading}) => {
             </div>
             {isTagsLoading
                 ?
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}
-                >
-                    <Loader/>
+                <div className={styles.tagRows}>
+                    {[...Array(5)].map(() => (
+                        <div key={Math.random()}
+                             className={classNames(styles.tagRow, styles.tagRowSkeleton)}
+                        />
+                    ))}
                 </div>
                 :
                 <div className={styles.tagRows}>

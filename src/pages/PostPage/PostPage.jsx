@@ -9,9 +9,9 @@ import PostSkeleton from "../../components/PostSkeleton/PostSkeleton.jsx";
 import {useSelector} from "react-redux";
 
 const PostPage = () => {
-    const [post, setPost] = useState();
+    const [post, setPost] = useState()
     const [isLoading, setIsLoading] = useState(true)
-    const { id } = useParams()
+    const { id, commentId } = useParams()
     const userData = useSelector(state => state.auth.data)
 
     useEffect(() => {
@@ -21,6 +21,16 @@ const PostPage = () => {
                 setIsLoading(false)
             })
             .catch(err => console.error(err))
+    }, [])
+
+    useEffect(() => {
+        if (commentId) {
+            const commentElem = document.getElementById(`${commentId}`)
+
+            if (commentElem) {
+                commentElem.scrollIntoView({behavior: 'smooth'})
+            }
+        }
     }, [])
 
     return (

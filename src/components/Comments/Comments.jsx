@@ -7,14 +7,15 @@ import {
     fetchLastComments,
     fetchUpdateComment
 } from "../../redux/slices/commentsSlice.js";
-import Loader from "../../shared/Loader/Loader.jsx";
 import {formatDistanceToNow, parseISO} from "date-fns";
 import classNames from "classnames";
 import {AiFillEdit, AiOutlineClose} from "react-icons/ai";
 import {Editor} from "@tinymce/tinymce-react";
 import btnStyles from "../../shared/Button.module.css";
+import {Link} from "react-router-dom";
+import CommentSkeleton from "../CommentSkeleton/CommentSkeleton.jsx";
 
-const CommentExcerpt = ({ comment, isOwner }) => {
+const CommentExcerpt = ({ comment, isOwner, inPost }) => {
     const dispatch = useDispatch()
     const [menuVisible, setMenuVisible] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
@@ -63,12 +64,13 @@ const CommentExcerpt = ({ comment, isOwner }) => {
                 </div>
                 :
                 <div
-                    className={styles.commentRow}
+                    className={inPost ? classNames(styles.commentRow) : classNames(styles.commentRow, styles.hover)}
+                    id={comment._id}
                     onMouseEnter={() => setMenuVisible(true)}
                     onMouseLeave={() => setMenuVisible(false)}
                 >
                     <div
-                        className={menuVisible && isOwner ? styles.actionMenu : classNames(styles.actionMenu, styles.hidden)}>
+                        className={menuVisible && isOwner && inPost ? styles.actionMenu : classNames(styles.actionMenu, styles.hidden)}>
                         <AiFillEdit
                             onClick={() => setIsEditing(true)}
                             className={styles.edit}
@@ -108,27 +110,42 @@ const Comments = ({inPost, postId}) => {
         if (inPost) {
             dispatch(fetchCommentsByPost(postId))
         } else {
-            console.log('inPost', inPost)
             dispatch(fetchLastComments())
         }
-    }, []);
+    }, [])
+
 
     return (
         <div className={styles.comments}>
             <div className={styles.headerRow}>
                 <h3 className={styles.header}>Комментарии</h3>
             </div>
-            <div className={styles.commentRows}>
+            <div key={Date.now()} className={styles.commentRows}>
                 {isCommentsLoading
-                    ? <Loader/>
+                    ?
+                    [...Array(5)].map(() => <CommentSkeleton key={Math.random()} />)
                     :
-                    comments.items.map(comment => (
-                        <CommentExcerpt
-                            key={comment._id}
-                            comment={comment}
-                            isOwner={userData?._id === comment.user._id}
-                        />
-                    ))
+                    comments.items.map(comment =>
+                        inPost
+                            ?
+                            <CommentExcerpt
+                                key={comment._id}
+                                comment={comment}
+                                isOwner={userData?._id === comment.user._id}
+                                inPost={inPost}
+                            />
+                            :
+                            <Link
+                                key={comment._id}
+                                to={`posts/${comment.post}/comment/${comment._id}`}
+                            >
+                                <CommentExcerpt
+                                    comment={comment}
+                                    isOwner={userData?._id === comment.user._id}
+                                    inPost={inPost}
+                                />
+                            </Link>
+                    )
                 }
             </div>
         </div>

@@ -2,17 +2,19 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from '../../axios.js'
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-    const { data } = await axios.get('/posts')
+    const {data} = await axios.get('/posts')
     return data
 })
 
 export const fetchTags = createAsyncThunk('posts/fetchTags', async () => {
-    const { data } = await axios.get('/tags')
+    const {data} = await axios.get('/tags')
     return data
 })
 
-export const fetchDeletePost = createAsyncThunk('posts/fetchDeletePost', async (id) =>
-    axios.delete(`/posts/${id}`)
+export const fetchDeletePost = createAsyncThunk('posts/fetchDeletePost', async (id) => {
+        const {data} = await axios.delete(`/posts/${id}`)
+        return data
+    }
 )
 
 const initialState = {

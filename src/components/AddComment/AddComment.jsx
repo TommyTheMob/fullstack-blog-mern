@@ -14,7 +14,6 @@ const AddComment = () => {
 
     const onSubmitBtnClick = () => {
         dispatch(fetchCreateComment({postId: id, text}))
-            .then(() => dispatch(fetchCommentsByPost(id)))
     }
 
     return (

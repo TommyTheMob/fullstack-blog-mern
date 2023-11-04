@@ -20,6 +20,7 @@ const HomePage = () => {
         dispatch(fetchTags())
     }, [])
 
+
     return (
         <main className={styles.pageContent}>
             <div className={styles.pageContentWrapper}>
@@ -30,16 +31,14 @@ const HomePage = () => {
                             <PostSkeleton key={Math.random()} />
                         ))
                         :
-                        posts.items.map(post => {
-                                console.log(post._id)
-                                return <Post key={post._id} post={post} isOwner={userData?._id === post.user._id}/>
-                            }
-                        )
+                        posts.items.map(post => (
+                            <Post key={post._id} post={post} isOwner={userData?._id === post.user._id}/>
+                        ))
                     }
                 </section>
                 <section className={styles.side}>
-                    {/*<Tags tags={tags.items} isTagsLoading={isTagsLoading} />*/}
-                    {/*<Comments inPost={false} />*/}
+                    <Tags tags={tags.items} isTagsLoading={isTagsLoading} />
+                    <Comments inPost={false} />
                 </section>
             </div>
         </main>

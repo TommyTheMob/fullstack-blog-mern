@@ -14,14 +14,14 @@ export const fetchLastComments = createAsyncThunk('comments/fetchLastComments', 
 })
 
 export const fetchCreateComment = createAsyncThunk('comments/fetchCreateComment', async (params) => {
-    const { postId, text } = params
+    const {postId, text} = params
 
     const {data} = await axios.post(`/comments/${postId}`, {text})
 
     return data
 })
 
-export const fetchDeleteComment = createAsyncThunk('comments/fetchDeleteComment', async (id) =>{
+export const fetchDeleteComment = createAsyncThunk('comments/fetchDeleteComment', async (id) => {
     const {data} = await axios.delete(`/comments/${id}`)
 
     return data
@@ -30,7 +30,7 @@ export const fetchDeleteComment = createAsyncThunk('comments/fetchDeleteComment'
 export const fetchUpdateComment = createAsyncThunk('comments/fetchUpdateComment', async (params) => {
     const {id, text} = params
 
-    const { data } = await axios.patch(`/comments/${id}`, {text})
+    const {data} = await axios.patch(`/comments/${id}`, {text})
 
     return data
 })
@@ -49,7 +49,7 @@ const commentsSlice = createSlice({
     extraReducers: builder => {
         builder
             // fetchCommentsByPost
-            .addCase(fetchCommentsByPost.pending, state => {
+            .addCase(fetchCommentsByPost.pending, (state, action) => {
                 state.comments.items = []
                 state.comments.status = 'loading'
             })
@@ -57,7 +57,7 @@ const commentsSlice = createSlice({
                 state.comments.items = action.payload
                 state.comments.status = 'loaded'
             })
-            .addCase(fetchCommentsByPost.rejected, state => {
+            .addCase(fetchCommentsByPost.rejected, (state, action) => {
                 state.comments.items = []
                 state.comments.status = 'error'
             })
@@ -74,6 +74,18 @@ const commentsSlice = createSlice({
             .addCase(fetchLastComments.rejected, state => {
                 state.comments.items = []
                 state.comments.status = 'error'
+            })
+
+            // fetchCreateComment
+            .addCase(fetchCreateComment.pending, state => {
+                state.comments.status = 'loading'
+            })
+            .addCase(fetchCreateComment.fulfilled, (state, action) => {
+                state.comments.items.unshift(action.payload)
+                state.comments.status = 'loaded'
+
+                // const posts = action.getState().posts.posts.items
+                console.log(action)
             })
 
             // delete comment

@@ -27,6 +27,14 @@
 
 }
 
+.hover {
+    transition: .2s;
+}
+
+.hover:hover {
+    background: #eee;
+}
+
 .actionMenu {
     position: absolute;
     top: 1rem;

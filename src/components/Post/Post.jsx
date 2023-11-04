@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './Post.module.css'
 import {AiFillEdit, AiOutlineClose, AiOutlineEye} from "react-icons/ai";
 import {PiChatTextLight} from "react-icons/pi";
@@ -6,7 +6,8 @@ import {Link, useNavigate} from "react-router-dom";
 import {parseISO, formatDistanceToNow} from 'date-fns';
 import classNames from "classnames";
 import {useDispatch} from "react-redux";
-import {fetchDeletePost} from "../../redux/slices/postsSlice.js";
+import {fetchDeletePost, fetchTags} from "../../redux/slices/postsSlice.js";
+import {fetchLastComments} from "../../redux/slices/commentsSlice.js";
 
 const Post = ({single, post, isOwner}) => {
     const dispatch = useDispatch()
@@ -23,7 +24,10 @@ const Post = ({single, post, isOwner}) => {
 
     const onDeletePostClick = () => {
         if (window.confirm('Удалить статью?')) {
-            dispatch(fetchDeletePost(post._id))
+            dispatch(fetchDeletePost(post._id)).then(() => {
+                dispatch(fetchLastComments())
+                dispatch(fetchTags())
+            })
             navigate('/')
         }
     }
@@ -36,16 +40,18 @@ const Post = ({single, post, isOwner}) => {
                 onMouseEnter={() => setMenuVisible(true)}
                 onMouseLeave={() => setMenuVisible(false)}
             >
-                <div className={menuVisible && isOwner ? styles.actionMenu : classNames(styles.actionMenu, styles.hidden)}>
+                <div
+                    className={menuVisible && isOwner ? styles.actionMenu : classNames(styles.actionMenu, styles.hidden)}>
                     <Link to={`/posts/${post._id}/edit`}>
                         <AiFillEdit className={styles.edit}/>
                     </Link>
                     <AiOutlineClose onClick={onDeletePostClick} className={styles.delete}/>
                 </div>
                 {post.imageUrl &&
-                    <div className={single ? styles.imgContainer : classNames(styles.imgContainer, styles.imgContainerMulti) }>
+                    <div
+                        className={single ? styles.imgContainer : classNames(styles.imgContainer, styles.imgContainerMulti)}>
                         <img
-                            className={single ?  styles.img : classNames(styles.img, styles.imgMulti) }
+                            className={single ? styles.img : classNames(styles.img, styles.imgMulti)}
                             src={`http://localhost:4444${post.imageUrl}`}
                             alt="post img"
                         />
@@ -72,7 +78,7 @@ const Post = ({single, post, isOwner}) => {
                     </div>
                     {single &&
                         <div className={styles.textContainer}>
-                            <span className={styles.text} dangerouslySetInnerHTML={ {__html: post.text} } />
+                            <span className={styles.text} dangerouslySetInnerHTML={{__html: post.text}}/>
                         </div>
                     }
                     <div className={styles.tagsContainer}>
@@ -88,7 +94,7 @@ const Post = ({single, post, isOwner}) => {
                         </div>
                         <div className={styles.comments}>
                             <PiChatTextLight/>
-                            <span>11</span>
+                            <span>{post.commentsAmount}</span>
                         </div>
                     </div>
                 </div>
