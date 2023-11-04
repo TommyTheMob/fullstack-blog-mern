@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styles from './Post.module.css'
 import {AiFillEdit, AiOutlineClose, AiOutlineEye} from "react-icons/ai";
 import {PiChatTextLight} from "react-icons/pi";
@@ -6,10 +6,10 @@ import {Link, useNavigate} from "react-router-dom";
 import {parseISO, formatDistanceToNow} from 'date-fns';
 import classNames from "classnames";
 import {useDispatch} from "react-redux";
-import {fetchDeletePost, fetchTags} from "../../redux/slices/postsSlice.js";
+import {fetchDeletePost, fetchTags, setSort} from "../../redux/slices/postsSlice.js";
 import {fetchLastComments} from "../../redux/slices/commentsSlice.js";
 
-const Post = ({single, post, isOwner}) => {
+const Post = ({single, post, isOwner, commentsAmount}) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -31,6 +31,12 @@ const Post = ({single, post, isOwner}) => {
             navigate('/')
         }
     }
+
+    const onTagInPostClick = (tag) => {
+        dispatch(setSort(tag))
+        navigate(`/tags/${tag}`)
+    }
+
 
     return (
         <>
@@ -83,7 +89,15 @@ const Post = ({single, post, isOwner}) => {
                     }
                     <div className={styles.tagsContainer}>
                         {post.tags.length > 0
-                            ? post.tags.map(tag => (<span key={tag}>#{tag}</span>))
+                            ? post.tags.map(tag => (
+                                <span
+                                    key={tag}
+                                    onClick={() => onTagInPostClick(tag)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    #{tag}
+                                </span>
+                            ))
                             : <span>no tags</span>
                         }
                     </div>
@@ -94,7 +108,7 @@ const Post = ({single, post, isOwner}) => {
                         </div>
                         <div className={styles.comments}>
                             <PiChatTextLight/>
-                            <span>{post.commentsAmount}</span>
+                            <span>{single ? commentsAmount : post.commentsAmount}</span>
                         </div>
                     </div>
                 </div>

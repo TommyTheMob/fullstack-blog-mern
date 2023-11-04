@@ -40,3 +40,14 @@
     background: #2389fd;
     color: white;
 }
+
+.secondary {
+    border: 2px solid #9d9d9d;
+    background: #9d9d9d;
+    color: #fff;
+}
+
+.secondary:hover {
+    background: #fff;
+    color: #9d9d9d;
+}

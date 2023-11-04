@@ -3,8 +3,18 @@ import styles from './Tags.module.css'
 import {PiHashBold} from "react-icons/pi";
 import Loader from "../../shared/Loader/Loader.jsx";
 import classNames from "classnames";
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {setSort} from "../../redux/slices/postsSlice.js";
 
 const Tags = ({tags, isTagsLoading}) => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const onTagClick = (tag) => {
+        dispatch(setSort(tag))
+        navigate(`/tags/${tag}`)
+    }
 
     return (
         <div className={styles.tags}>
@@ -23,7 +33,7 @@ const Tags = ({tags, isTagsLoading}) => {
                 :
                 <div className={styles.tagRows}>
                     {tags?.map(tag => (
-                        <div key={tag} className={styles.tagRow}>
+                        <div key={tag} className={styles.tagRow} onClick={() => onTagClick(tag)}>
                             <PiHashBold className={styles.hash}/>
                             <span>{tag}</span>
                         </div>

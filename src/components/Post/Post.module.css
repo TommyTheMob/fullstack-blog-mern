@@ -145,6 +145,7 @@
 }
 
 .text {
+    word-wrap: break-word;
 }
 
 .tagsContainer {

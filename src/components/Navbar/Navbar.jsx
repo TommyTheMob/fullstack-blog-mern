@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styles from './Navbar.module.css'
 import btnStyles from '../../shared/Button.module.css'
 import classNames from "classnames";

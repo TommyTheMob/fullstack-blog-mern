@@ -10,6 +10,7 @@ import {useSelector} from "react-redux";
 
 const PostPage = () => {
     const [post, setPost] = useState()
+    const [commentsAmount, setCommentsAmount] = useState()
     const [isLoading, setIsLoading] = useState(true)
     const { id, commentId } = useParams()
     const userData = useSelector(state => state.auth.data)
@@ -18,6 +19,7 @@ const PostPage = () => {
         axios.get(`/posts/${id}`)
             .then(data => {
                 setPost(data.data)
+                setCommentsAmount(data.data.commentsAmount)
                 setIsLoading(false)
             })
             .catch(err => console.error(err))
@@ -39,12 +41,12 @@ const PostPage = () => {
                 <section className={styles.post}>
                     {isLoading
                         ? <PostSkeleton />
-                        : <Post single={true} post={post} isOwner={userData?._id === post.user._id} />
+                        : <Post single={true} post={post} commentsAmount={commentsAmount} isOwner={userData?._id === post.user._id} />
                     }
                 </section>
                 <section className={styles.comments}>
-                    <AddComment />
-                    <Comments inPost={true} postId={id} />
+                    <AddComment setCommentsAmount={setCommentsAmount} />
+                    <Comments inPost={true} postId={id} setCommentsAmount={setCommentsAmount} />
                 </section>
             </div>
         </main>

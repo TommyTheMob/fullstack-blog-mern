@@ -83,9 +83,6 @@ const commentsSlice = createSlice({
             .addCase(fetchCreateComment.fulfilled, (state, action) => {
                 state.comments.items.unshift(action.payload)
                 state.comments.status = 'loaded'
-
-                // const posts = action.getState().posts.posts.items
-                console.log(action)
             })
 
             // delete comment

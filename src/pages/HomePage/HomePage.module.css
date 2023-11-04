@@ -8,12 +8,76 @@
     display: flex;
     justify-content: center;
     align-items: start;
+
+    position: relative;
 }
 
 .posts {
     margin-right: 3rem;
 }
 
+.btns {
+    position: absolute;
+    top: 2.5rem;
+}
+
+.newBtn,
+.popBtn {
+    background: transparent;
+
+    border: none;
+    border-bottom: 2px solid transparent;
+
+    font-size: 1rem;
+    color: #9d9d9d;
+    
+    cursor: pointer;
+}
+
+.newBtn {
+    margin-right: .5rem;
+}
+
+.newBtn:hover,
+.popBtn:hover {
+    border-bottom: 2px solid #2389fd;
+    color: #2389fd;
+}
+
+.active {
+    border-bottom: 2px solid #2389fd;
+    color: #2389fd;
+
+    cursor: default;
+}
+
 .side {
     width: 20rem;
+}
+
+.tagBlock {
+    position: absolute;
+    top: 1rem;
+}
+
+.hashtag {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    font-size: 1.3rem;
+
+    color: #9d9d9d;
+}
+
+.tag {
+
+}
+
+.hash {
+    margin-right: .2rem;
+}
+
+.toMainBtn {
+    margin-left: .2rem;
 }

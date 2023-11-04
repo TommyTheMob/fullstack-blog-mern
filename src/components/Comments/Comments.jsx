@@ -15,7 +15,7 @@ import btnStyles from "../../shared/Button.module.css";
 import {Link} from "react-router-dom";
 import CommentSkeleton from "../CommentSkeleton/CommentSkeleton.jsx";
 
-const CommentExcerpt = ({ comment, isOwner, inPost }) => {
+const CommentExcerpt = ({ comment, isOwner, inPost, setCommentsAmount }) => {
     const dispatch = useDispatch()
     const [menuVisible, setMenuVisible] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
@@ -23,6 +23,7 @@ const CommentExcerpt = ({ comment, isOwner, inPost }) => {
 
     const onDeleteBtnClick = () => {
         dispatch(fetchDeleteComment(comment._id))
+        setCommentsAmount(prev => prev - 1)
     }
 
     const onSubmitBtnClick = () => {
@@ -91,7 +92,14 @@ const CommentExcerpt = ({ comment, isOwner, inPost }) => {
                             <span
                                 className={styles.date}>{`${formatDistanceToNow(parseISO(comment.createdAt))} ago`}</span>
                         </div>
-                        <span className={styles.text} dangerouslySetInnerHTML={{__html: comment.text}}/>
+                        <span
+                            className={styles.text}
+                            dangerouslySetInnerHTML={
+                                inPost
+                                    ? {__html: comment.text}
+                                    : comment.text.length  > 35 ? {__html: `${comment.text.slice(0, 35)}...`} : {__html: comment.text}
+                            }
+                        />
                     </div>
                 </div>
             }
@@ -99,7 +107,7 @@ const CommentExcerpt = ({ comment, isOwner, inPost }) => {
     )
 }
 
-const Comments = ({inPost, postId}) => {
+const Comments = ({inPost, postId, setCommentsAmount}) => {
     const dispatch = useDispatch()
     const {comments} = useSelector(state => state.comments)
     const userData = useSelector(state => state.auth.data)
@@ -113,7 +121,6 @@ const Comments = ({inPost, postId}) => {
             dispatch(fetchLastComments())
         }
     }, [])
-
 
     return (
         <div className={styles.comments}>
@@ -133,11 +140,12 @@ const Comments = ({inPost, postId}) => {
                                 comment={comment}
                                 isOwner={userData?._id === comment.user._id}
                                 inPost={inPost}
+                                setCommentsAmount={setCommentsAmount}
                             />
                             :
                             <Link
                                 key={comment._id}
-                                to={`posts/${comment.post}/comment/${comment._id}`}
+                                to={`/posts/${comment.post}/comment/${comment._id}`}
                             >
                                 <CommentExcerpt
                                     comment={comment}

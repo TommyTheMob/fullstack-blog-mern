@@ -1,4 +1,5 @@
 .comments {
+    width: auto;
     max-width: 1024px;
 
     margin-top: 2rem;
@@ -131,6 +132,11 @@
 .text {
     margin-top: .5rem;
     margin-bottom: .2rem;
+
+    display: block;
+
+
+    word-wrap: break-word;
 }
 
 .editor {

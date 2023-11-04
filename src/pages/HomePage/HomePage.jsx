@@ -1,30 +1,78 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './HomePage.module.css'
+import styleBtns from '../../shared/Button.module.css'
 import Post from "../../components/Post/Post.jsx";
 import Tags from "../../components/Tags/Tags.jsx";
 import Comments from "../../components/Comments/Comments.jsx";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchPosts, fetchTags} from "../../redux/slices/postsSlice.js";
+import {fetchPosts, fetchTags, setSort} from "../../redux/slices/postsSlice.js";
 import PostSkeleton from "../../components/PostSkeleton/PostSkeleton.jsx";
+import classNames from "classnames";
+import {Link, useParams} from "react-router-dom";
+import {PiHashBold} from "react-icons/pi";
 
 const HomePage = () => {
     const dispatch = useDispatch()
+    const { tag } = useParams()
     const { posts, tags } = useSelector(state => state.posts)
     const userData = useSelector(state => state.auth.data)
 
     const isPostsLoading = posts.status === 'loading'
     const isTagsLoading = tags.status === 'loading'
 
+    if (!tag) {
+        posts.sort !== 'pop' && dispatch(setSort('new'))
+    }
+
     useEffect(() => {
-        dispatch(fetchPosts())
         dispatch(fetchTags())
     }, [])
 
+    useEffect(() => {
+        dispatch(fetchPosts(posts.sort))
+    }, [posts.sort])
+
+    const onNewBtnClick = () => {
+        dispatch(setSort('new'))
+    }
+
+    const onPopBtnClick = () => {
+        dispatch(setSort('pop'))
+    }
 
     return (
         <main className={styles.pageContent}>
             <div className={styles.pageContentWrapper}>
                 <section className={styles.posts}>
+                    {!tag
+                        ?
+                        <div className={styles.btns}>
+                            <button
+                                className={posts.sort === 'new' ? classNames(styles.newBtn, styles.active) : classNames(styles.newBtn)}
+                                onClick={onNewBtnClick}
+                            >
+                                Новые
+                            </button>
+                            <button
+                                className={posts.sort === 'pop' ? classNames(styles.popBtn, styles.active) : classNames(styles.popBtn)}
+                                onClick={onPopBtnClick}
+                            >
+                                Популярные
+                            </button>
+                        </div>
+                        :
+                        <div className={styles.tagBlock}>
+                            <Link to='/'>
+                                <button className={classNames(styleBtns.btn, styleBtns.secondary, styles.toMainBtn)}>
+                                    На главную
+                                </button>
+                            </Link>
+                            <div className={styles.hashtag}>
+                                <PiHashBold className={styles.hash}/>
+                                <span className={styles.tag}>{tag}</span>
+                            </div>
+                        </div>
+                    }
                     {isPostsLoading
                         ?
                         [...Array(5)].map(() => (

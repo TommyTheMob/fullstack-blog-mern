@@ -22,6 +22,7 @@ function App() {
             <Navbar/>
             <Routes>
                 <Route path='/' element={<HomePage />} />
+                <Route path='/tags/:tag' element={<HomePage />} />
                 <Route path='/posts/:id' element={<PostPage />} />
                 <Route path='/posts/:id/comment/:commentId' element={<PostPage />} />
                 <Route path='/posts/:id/edit' element={<AddPost />} />
