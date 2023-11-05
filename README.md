@@ -1,6 +1,6 @@
 # Deployments
 
-**Front**: Project available on [Vercel](https://blog-mern-front-6pfgdvqhy-tommythemobs-projects.vercel.app/)
+**Front**: Project available on [Vercel](https://blog-mern-front-livid.vercel.app/)
 
 **Backend**: API is on [Railway](https://blog-mern-backend.up.railway.app/)
 
