@@ -6,9 +6,9 @@ import axios from "../../axios.js";
 import {BsTrash} from "react-icons/bs";
 
 const LoginRegForm = ({title, handleClick}) => {
-    const [email, setEmail] = useState('test@test.ru')
-    const [password, setPassword] = useState('11111')
-    const [fullName, setFullName] = useState('Patau')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [fullName, setFullName] = useState('')
     const [avatarUrl, setAvatarUrl] = useState('')
 
     const [avatarTip, setAvatarTip] = useState(false)
