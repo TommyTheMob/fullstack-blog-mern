@@ -7,7 +7,16 @@ export const getLastTags = async (req, res) => {
 
         const sorted = posts.sort((a, b) => b.createdAt.toISOString().localeCompare(a.createdAt.toISOString())).slice(0, 5)
 
-        const tags = sorted.map(obj => obj.tags).flat().slice(0, 5)
+        const tags = sorted
+            .map(obj => obj.tags)
+            .flat()
+            .reduce((acc, cur) => {
+                if (!acc.includes(cur)) {
+                    acc.push(cur)
+                }
+                return acc
+            }, [])
+            .slice(0, 5)
 
         res.json(tags)
     } catch (err) {
