@@ -1,8 +1,40 @@
-# React + Vite
+# Deployments
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Front**: Project available on [Vercel](https://blog-mern-front-6pfgdvqhy-tommythemobs-projects.vercel.app/)
 
-Currently, two official plugins are available:
+**Backend**: API is on [Railway](https://blog-mern-backend.up.railway.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Node
+
+**Node**: v20.3.1
+
+# Using technologies
+
+**Frontend**
+<ol>
+    <li>React</li>
+    <li>react-router-dom</li>
+    <li>Redux/Toolkit</li>
+    <li>react-redux</li>
+    <li>axios</li>
+    <li>css-modules</li>
+    <li>Vite</li>
+</ol>
+
+**Backend**
+<ol>
+    <li>Node.js</li>
+    <li>Express</li>
+    <li>Mongoose</li>
+    <li>MongoDB</li>
+    <li>bcryptjs</li>
+    <li>jsonwebtoken</li>
+    <li>multer</li>
+    <li>fs</li>
+    <li>nodemon</li>
+    <li>cors</li>
+</ol>
+
+# Adaptive
+
+Adaptive is in progress...
