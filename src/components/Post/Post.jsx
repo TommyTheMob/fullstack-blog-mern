@@ -58,7 +58,7 @@ const Post = ({single, post, isOwner, commentsAmount}) => {
                         className={single ? styles.imgContainer : classNames(styles.imgContainer, styles.imgContainerMulti)}>
                         <img
                             className={single ? styles.img : classNames(styles.img, styles.imgMulti)}
-                            src={`http://localhost:4444${post.imageUrl}`}
+                            src={`${import.meta.env.VITE_API_URL}${post.imageUrl}`}
                             alt="post img"
                         />
                     </div>
@@ -69,7 +69,7 @@ const Post = ({single, post, isOwner, commentsAmount}) => {
                     <div className={styles.author}>
                         <img
                             className={styles.avatar}
-                            src={post.user.avatarUrl ? `http://localhost:4444${post.user.avatarUrl}` : "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"}
+                            src={post.user.avatarUrl ? `${import.meta.env.VITE_API_URL}${post.user.avatarUrl}` : "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"}
                             alt="avatar"
                         />
                         <div className={styles.info}>

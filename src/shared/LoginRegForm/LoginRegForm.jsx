@@ -49,7 +49,7 @@ const LoginRegForm = ({title, handleClick}) => {
                                 }}
                             >
                                 <img
-                                    src={`http://localhost:4444${avatarUrl}`}
+                                    src={`${import.meta.env.VITE_API_URL}${avatarUrl}`}
                                     alt="avatar"
                                 />
                                 <BsTrash

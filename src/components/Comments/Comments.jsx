@@ -83,7 +83,7 @@ const CommentExcerpt = ({ comment, isOwner, inPost, setCommentsAmount }) => {
                     </div>
                     <img
                         className={styles.avatar}
-                        src={comment.user.avatarUrl ? `http://localhost:4444${comment.user.avatarUrl}` : "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"}
+                        src={comment.user.avatarUrl ? `${import.meta.env.VITE_API_URL}${comment.user.avatarUrl}` : "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"}
                         alt="avatar"
                     />
                     <div className={styles.content}>
