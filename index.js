@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from "mongoose"
 import multer from "multer"
 import cors from 'cors'
+import fs from 'fs'
 
 import { config } from 'dotenv';
 
@@ -23,6 +24,9 @@ const app = express()
 
 const storage = multer.diskStorage({
     destination: (_, __, cb) => {
+        if (!fs.existsSync('uploads')) {
+            fs.mkdirSync('uploads')
+        }
         cb(null, 'uploads')
     },
     filename: (_, file, cb) => {
@@ -61,7 +65,7 @@ app.post('/comments/:postId', checkAuth, commentCreateValidation, CommentControl
 app.delete('/comments/:commentId', checkAuth, CommentController.remove)
 app.patch('/comments/:commentId', checkAuth, commentCreateValidation, CommentController. update)
 
-app.listen(4444, (err) => {
+app.listen(process.env.PORT || 4444, (err) => {
     if (err) {
         return console.log(err)
     }
