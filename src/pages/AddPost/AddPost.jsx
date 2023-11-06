@@ -101,7 +101,7 @@ const AddPost = () => {
                         {imageUrl &&
                             <>
                                 <div className={styles.imgContainer}>
-                                    <img src={`${import.meta.env.VITE_API_URL}${imageUrl}`} alt="post image"/>
+                                    <img src={`${import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : 'http://localhost:4444'}${imageUrl}`} alt="post image"/>
                                 </div>
                                 <button
                                     className={classNames(btnStyles.btn, btnStyles.primaryOutlined)}

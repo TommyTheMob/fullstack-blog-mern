@@ -1,0 +1,53 @@
+.actionMenu {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    padding: 0.2rem 0.3rem;
+
+    border-radius: 5px;
+
+    background: #eee;
+
+    display: flex;
+    align-items: center;
+
+    transform: translateX(0);
+
+    transition: .2s;
+}
+
+.hidden {
+    opacity: 0;
+    height: 0;
+    width: 0;
+    line-height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+
+    transform: translateX(50px);
+}
+
+.edit {
+    font-size: 1.5rem;
+
+    margin-right: .5rem;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.delete {
+    font-size: 1.5rem;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.edit:hover,
+.delete:hover {
+    transform: scale(1.3);
+}

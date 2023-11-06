@@ -14,6 +14,7 @@ import {Editor} from "@tinymce/tinymce-react";
 import btnStyles from "../../shared/Button.module.css";
 import {Link} from "react-router-dom";
 import CommentSkeleton from "../CommentSkeleton/CommentSkeleton.jsx";
+import ActionMenu from "../../shared/ActionMenu/ActionMenu.jsx";
 
 const CommentExcerpt = ({ comment, isOwner, inPost, setCommentsAmount }) => {
     const dispatch = useDispatch()
@@ -70,20 +71,18 @@ const CommentExcerpt = ({ comment, isOwner, inPost, setCommentsAmount }) => {
                     onMouseEnter={() => setMenuVisible(true)}
                     onMouseLeave={() => setMenuVisible(false)}
                 >
-                    <div
-                        className={menuVisible && isOwner && inPost ? styles.actionMenu : classNames(styles.actionMenu, styles.hidden)}>
-                        <AiFillEdit
-                            onClick={() => setIsEditing(true)}
-                            className={styles.edit}
+                    {inPost &&
+                        <ActionMenu
+                            visible={menuVisible}
+                            isOwner={isOwner}
+                            edit={setIsEditing}
+                            remove={onDeleteBtnClick}
+                            comment
                         />
-                        <AiOutlineClose
-                            className={styles.delete}
-                            onClick={onDeleteBtnClick}
-                        />
-                    </div>
+                    }
                     <img
                         className={styles.avatar}
-                        src={comment.user.avatarUrl ? `${import.meta.env.VITE_API_URL}${comment.user.avatarUrl}` : "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"}
+                        src={comment.user.avatarUrl ? `${import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : 'http://localhost:4444'}${comment.user.avatarUrl}` : "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"}
                         alt="avatar"
                     />
                     <div className={styles.content}>

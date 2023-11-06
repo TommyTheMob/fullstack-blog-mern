@@ -8,12 +8,17 @@ import classNames from "classnames";
 import {useDispatch} from "react-redux";
 import {fetchDeletePost, fetchTags, setSort} from "../../redux/slices/postsSlice.js";
 import {fetchLastComments} from "../../redux/slices/commentsSlice.js";
+import ActionMenu from "../../shared/ActionMenu/ActionMenu.jsx";
 
 const Post = ({single, post, isOwner, commentsAmount}) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const [menuVisible, setMenuVisible] = useState(false)
+
+    const postClasses = single
+        ? styles.postSingle
+        : menuVisible ? classNames(styles.postMulti, styles.postHover) : styles.postMulti
 
     let timeAgo = ``
     if (post) {
@@ -22,7 +27,8 @@ const Post = ({single, post, isOwner, commentsAmount}) => {
         timeAgo = `${timePeriod} ago`
     }
 
-    const onDeletePostClick = () => {
+    const onDeletePostClick = (event) => {
+        event.stopPropagation()
         if (window.confirm('Удалить статью?')) {
             dispatch(fetchDeletePost(post._id)).then(() => {
                 dispatch(fetchLastComments())
@@ -32,33 +38,43 @@ const Post = ({single, post, isOwner, commentsAmount}) => {
         }
     }
 
-    const onTagInPostClick = (tag) => {
+    const onEditPostClick = (event) => {
+        event.stopPropagation()
+        navigate(`/posts/${post._id}/edit`)
+    }
+
+    const onTagInPostClick = (event, tag) => {
+        event.stopPropagation()
         dispatch(setSort(tag))
         navigate(`/tags/${tag}`)
+    }
+
+    const onFullPostClick = () => {
+        navigate(`/posts/${post._id}`)
     }
 
 
     return (
         <>
             <div
-                className={single ? styles.postSingle : styles.postMulti}
+                className={postClasses}
                 style={!post.imageUrl ? {height: 'auto'} : {}}
                 onMouseEnter={() => setMenuVisible(true)}
                 onMouseLeave={() => setMenuVisible(false)}
+                onClick={onFullPostClick}
             >
-                <div
-                    className={menuVisible && isOwner ? styles.actionMenu : classNames(styles.actionMenu, styles.hidden)}>
-                    <Link to={`/posts/${post._id}/edit`}>
-                        <AiFillEdit className={styles.edit}/>
-                    </Link>
-                    <AiOutlineClose onClick={onDeletePostClick} className={styles.delete}/>
-                </div>
+                <ActionMenu
+                    visible={menuVisible}
+                    isOwner={isOwner}
+                    edit={onEditPostClick}
+                    remove={onDeletePostClick}
+                />
                 {post.imageUrl &&
                     <div
                         className={single ? styles.imgContainer : classNames(styles.imgContainer, styles.imgContainerMulti)}>
                         <img
                             className={single ? styles.img : classNames(styles.img, styles.imgMulti)}
-                            src={`${import.meta.env.VITE_API_URL}${post.imageUrl}`}
+                            src={`${import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : 'http://localhost:4444'}${post.imageUrl}`}
                             alt="post img"
                         />
                     </div>
@@ -69,7 +85,7 @@ const Post = ({single, post, isOwner, commentsAmount}) => {
                     <div className={styles.author}>
                         <img
                             className={styles.avatar}
-                            src={post.user.avatarUrl ? `${import.meta.env.VITE_API_URL}${post.user.avatarUrl}` : "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"}
+                            src={post.user.avatarUrl ? `${import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : 'http://localhost:4444'}${post.user.avatarUrl}` : "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"}
                             alt="avatar"
                         />
                         <div className={styles.info}>
@@ -78,9 +94,7 @@ const Post = ({single, post, isOwner, commentsAmount}) => {
                         </div>
                     </div>
                     <div className={styles.headerContainer}>
-                        <Link to={`/posts/${post._id}`}>
-                            <h1 className={styles.header}>{post.title}</h1>
-                        </Link>
+                        <h1 className={styles.header}>{post.title}</h1>
                     </div>
                     {single &&
                         <div className={styles.textContainer}>
@@ -92,8 +106,8 @@ const Post = ({single, post, isOwner, commentsAmount}) => {
                             ? post.tags.map(tag => (
                                 <span
                                     key={tag}
-                                    onClick={() => onTagInPostClick(tag)}
-                                    style={{ cursor: 'pointer' }}
+                                    className={styles.tag}
+                                    onClick={(event) => onTagInPostClick(event, tag)}
                                 >
                                     #{tag}
                                 </span>

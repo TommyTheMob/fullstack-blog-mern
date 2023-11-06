@@ -28,7 +28,7 @@ const Navbar = () => {
                         <div className={styles.userInfo}>
                             <img
                                 className={styles.avatar}
-                                src={userData?.avatarUrl ? `${import.meta.env.VITE_API_URL}${userData.avatarUrl}` : 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'}
+                                src={userData?.avatarUrl ? `${import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : 'http://localhost:4444'}${userData.avatarUrl}` : 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'}
                                 alt="user avatar"
                             />
                             <span className={styles.name}>{userData?.fullName}</span>
