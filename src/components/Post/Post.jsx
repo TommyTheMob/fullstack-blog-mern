@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import styles from './Post.module.css'
-import {AiFillEdit, AiOutlineClose, AiOutlineEye} from "react-icons/ai";
+import {AiOutlineEye} from "react-icons/ai";
 import {PiChatTextLight} from "react-icons/pi";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {parseISO, formatDistanceToNow} from 'date-fns';
 import classNames from "classnames";
 import {useDispatch} from "react-redux";
@@ -74,7 +74,7 @@ const Post = ({single, post, isOwner, commentsAmount}) => {
                         className={single ? styles.imgContainer : classNames(styles.imgContainer, styles.imgContainerMulti)}>
                         <img
                             className={single ? styles.img : classNames(styles.img, styles.imgMulti)}
-                            src={`${import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : 'http://localhost:4444'}${post.imageUrl}`}
+                            src={post.imageUrl}
                             alt="post img"
                         />
                     </div>
@@ -85,7 +85,7 @@ const Post = ({single, post, isOwner, commentsAmount}) => {
                     <div className={styles.author}>
                         <img
                             className={styles.avatar}
-                            src={post.user.avatarUrl ? `${import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : 'http://localhost:4444'}${post.user.avatarUrl}` : "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"}
+                            src={post.user.avatarUrl ? post.user.avatarUrl: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'}
                             alt="avatar"
                         />
                         <div className={styles.info}>

@@ -9,7 +9,6 @@ import {
 } from "../../redux/slices/commentsSlice.js";
 import {formatDistanceToNow, parseISO} from "date-fns";
 import classNames from "classnames";
-import {AiFillEdit, AiOutlineClose} from "react-icons/ai";
 import {Editor} from "@tinymce/tinymce-react";
 import btnStyles from "../../shared/Button.module.css";
 import {Link} from "react-router-dom";
@@ -23,7 +22,9 @@ const CommentExcerpt = ({ comment, isOwner, inPost, setCommentsAmount }) => {
     const [text, setText] = useState('')
 
     const onDeleteBtnClick = () => {
-        dispatch(fetchDeleteComment(comment._id))
+        if (window.confirm('Удалить комментарий?')) {
+            dispatch(fetchDeleteComment(comment._id))
+        }
         setCommentsAmount(prev => prev - 1)
     }
 
@@ -82,7 +83,7 @@ const CommentExcerpt = ({ comment, isOwner, inPost, setCommentsAmount }) => {
                     }
                     <img
                         className={styles.avatar}
-                        src={comment.user.avatarUrl ? `${import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : 'http://localhost:4444'}${comment.user.avatarUrl}` : "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"}
+                        src={comment.user.avatarUrl ? comment.user.avatarUrl: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'}
                         alt="avatar"
                     />
                     <div className={styles.content}>

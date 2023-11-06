@@ -8,8 +8,13 @@
     align-items: start;
 }
 
+.toMainBtn {
+    margin-top: 1rem;
+}
+
 .addPost {
-    margin: 2rem 0;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     padding: 1rem;
     padding-top: 0;
 

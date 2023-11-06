@@ -6,8 +6,8 @@
 }
 
 .pageContentWrapper {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 
     display: flex;
     justify-content: start;
@@ -22,7 +22,7 @@
 }
 
 .toMainBtn {
-    margin-bottom: .5rem;
+    margin-bottom: 1rem;
 }
 
 .comments {
