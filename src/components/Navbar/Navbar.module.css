@@ -134,7 +134,13 @@
 
 @media (max-width: 1280px) {}
 
-@media (max-width: 960px) {}
+@media (max-width: 960px) {
+    .content {
+        justify-content: space-between;
+
+        padding: 0 1rem;
+    }
+}
 
 @media (max-width: 640px) {
     .burgerContent {

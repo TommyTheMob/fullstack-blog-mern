@@ -7,9 +7,11 @@ import classNames from "classnames";
 import btnStyles from "../../../shared/Button.module.css";
 import ActionMenu from "../../../shared/ActionMenu/ActionMenu.jsx";
 import {formatDistanceToNow, parseISO} from "date-fns";
+import {useNavigate} from "react-router-dom";
 
 const CommentExcerpt = ({comment, isOwner, inPost, setCommentsAmount, windowWidth}) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [menuVisible, setMenuVisible] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [text, setText] = useState('')
@@ -24,6 +26,12 @@ const CommentExcerpt = ({comment, isOwner, inPost, setCommentsAmount, windowWidt
     const onSubmitBtnClick = () => {
         dispatch(fetchUpdateComment({id: comment._id, text}))
         setIsEditing(false)
+    }
+
+    const onCommentClick = () => {
+        if (!inPost) {
+            navigate(`/posts/${comment.post}/comment/${comment._id}`)
+        }
     }
 
     return (
@@ -65,6 +73,7 @@ const CommentExcerpt = ({comment, isOwner, inPost, setCommentsAmount, windowWidt
                     id={comment._id}
                     onMouseEnter={() => setMenuVisible(true)}
                     onMouseLeave={() => setMenuVisible(false)}
+                    onClick={onCommentClick}
                 >
                     {inPost &&
                         <ActionMenu
