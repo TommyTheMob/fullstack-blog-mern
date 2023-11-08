@@ -170,3 +170,46 @@
 
     margin-left: .1rem;
 }
+
+@media (max-width: 1920px) {}
+
+@media (max-width: 1280px) {
+    .postMulti {
+        width: 30rem;
+    }
+}
+
+@media (max-width: 960px) {
+    .postMulti {
+        width: auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .avatar {
+        width: 30px;
+        height: 30px;
+    }
+
+    .name {
+        font-size: .9rem;
+    }
+
+    .header {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .header {
+        padding: 0;
+    }
+
+    .tagsContainer {
+        padding: 0;
+    }
+
+    .reactions {
+        padding: 0;
+    }
+}

@@ -122,3 +122,57 @@
 }
 
 .cancelBtn {}
+
+@media (max-width: 1920px) {}
+
+@media (max-width: 1280px) {}
+
+@media (max-width: 960px) {
+    .pageContentWrapper {
+        width: 100%;
+
+        display: block;
+    }
+
+    .toMainBtn {
+        margin-left: 1rem;
+    }
+
+    .addPost {
+        width: auto;
+
+        margin: 1rem;
+    }
+
+    .imgContainer {
+        max-height: 480px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .imgContainer img {
+        width: 640px;
+    }
+}
+
+@media (max-width: 640px) {
+    .imgContainer {
+        min-height: 240px;
+    }
+
+    .imgContainer img {
+        width: 320px;
+    }
+}
+
+@media (max-width: 320px) {
+    .imgContainer {
+        min-height: 160px;
+    }
+
+    .imgContainer img {
+        width: 240px;
+    }
+}

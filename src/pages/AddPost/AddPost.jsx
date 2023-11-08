@@ -108,6 +108,10 @@ const AddPost = () => {
         }
     }
 
+    const onCancelBtnClick = () => {
+        navigate(-1)
+    }
+
     return (
         <div className={styles.pageContent}>
             <div className={styles.pageContentWrapper}>
@@ -191,7 +195,10 @@ const AddPost = () => {
                             {isEditing ? 'Сохранить' : 'Опубликовать'}
                         </button>
                         <button
-                            className={classNames(btnStyles.btn, btnStyles.primaryOutlined, styles.cancelBtn)}>Отмена
+                            className={classNames(btnStyles.btn, btnStyles.danger, styles.cancelBtn)}
+                            onClick={onCancelBtnClick}
+                        >
+                            Отмена
                         </button>
                     </div>
                 </div>

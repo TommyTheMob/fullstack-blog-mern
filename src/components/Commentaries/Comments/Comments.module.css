@@ -1,0 +1,53 @@
+.comments {
+    width: auto;
+    max-width: 1024px;
+
+    margin-top: 2rem;
+
+    padding: 1rem;
+
+    border-radius: 5px;
+    border: 2px solid #eee;
+
+    background: white;
+
+    box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.commentsSingle {
+
+}
+
+.headerRow {
+}
+
+.header {
+}
+
+.commentRows {
+
+}
+
+@media (max-width: 1920px) {
+
+}
+
+@media (max-width: 1280px) {
+
+}
+
+@media (max-width: 960px) {
+    .skeletonContainer {
+        display: flex;
+
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 640px) {
+
+}
+
+@media (max-width: 320px) {
+
+}

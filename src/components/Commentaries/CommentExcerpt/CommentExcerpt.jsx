@@ -1,21 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import styles from './Comments.module.css';
-import {useDispatch, useSelector} from "react-redux";
-import {
-    fetchCommentsByPost,
-    fetchDeleteComment,
-    fetchLastComments,
-    fetchUpdateComment
-} from "../../redux/slices/commentsSlice.js";
-import {formatDistanceToNow, parseISO} from "date-fns";
-import classNames from "classnames";
+import {useDispatch} from "react-redux";
+import React, {useState} from "react";
+import {fetchDeleteComment, fetchUpdateComment} from "../../../redux/slices/commentsSlice.js";
+import styles from "./CommentExcerpt.module.css";
 import {Editor} from "@tinymce/tinymce-react";
-import btnStyles from "../../shared/Button.module.css";
-import {Link} from "react-router-dom";
-import CommentSkeleton from "../CommentSkeleton/CommentSkeleton.jsx";
-import ActionMenu from "../../shared/ActionMenu/ActionMenu.jsx";
+import classNames from "classnames";
+import btnStyles from "../../../shared/Button.module.css";
+import ActionMenu from "../../../shared/ActionMenu/ActionMenu.jsx";
+import {formatDistanceToNow, parseISO} from "date-fns";
 
-const CommentExcerpt = ({ comment, isOwner, inPost, setCommentsAmount }) => {
+const CommentExcerpt = ({comment, isOwner, inPost, setCommentsAmount, windowWidth}) => {
     const dispatch = useDispatch()
     const [menuVisible, setMenuVisible] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
@@ -60,7 +53,7 @@ const CommentExcerpt = ({ comment, isOwner, inPost, setCommentsAmount }) => {
                     </button>
                     <button
                         onClick={() => setIsEditing(false)}
-                        className={classNames(btnStyles.btn, btnStyles.primaryOutlined)}
+                        className={classNames(btnStyles.btn, btnStyles.danger)}
                     >
                         Отмена
                     </button>
@@ -68,6 +61,7 @@ const CommentExcerpt = ({ comment, isOwner, inPost, setCommentsAmount }) => {
                 :
                 <div
                     className={inPost ? classNames(styles.commentRow) : classNames(styles.commentRow, styles.hover)}
+                    style={inPost ? { height: "auto" } : {}}
                     id={comment._id}
                     onMouseEnter={() => setMenuVisible(true)}
                     onMouseLeave={() => setMenuVisible(false)}
@@ -83,7 +77,7 @@ const CommentExcerpt = ({ comment, isOwner, inPost, setCommentsAmount }) => {
                     }
                     <img
                         className={styles.avatar}
-                        src={comment.user.avatarUrl ? comment.user.avatarUrl: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'}
+                        src={comment.user.avatarUrl ? comment.user.avatarUrl : 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'}
                         alt="avatar"
                     />
                     <div className={styles.content}>
@@ -97,7 +91,10 @@ const CommentExcerpt = ({ comment, isOwner, inPost, setCommentsAmount }) => {
                             dangerouslySetInnerHTML={
                                 inPost
                                     ? {__html: comment.text}
-                                    : comment.text.length  > 35 ? {__html: `${comment.text.slice(0, 35)}...`} : {__html: comment.text}
+                                    :
+                                    windowWidth < 480
+                                        ? comment.text.length > 15 ? {__html: `${comment.text.slice(0, 15)}...`} : {__html: comment.text}
+                                        : comment.text.length > 35 ? {__html: `${comment.text.slice(0, 35)}...`} : {__html: comment.text}
                             }
                         />
                     </div>
@@ -107,57 +104,4 @@ const CommentExcerpt = ({ comment, isOwner, inPost, setCommentsAmount }) => {
     )
 }
 
-const Comments = ({inPost, postId, setCommentsAmount}) => {
-    const dispatch = useDispatch()
-    const {comments} = useSelector(state => state.comments)
-    const userData = useSelector(state => state.auth.data)
-
-    const isCommentsLoading = comments.status === 'loading'
-
-    useEffect(() => {
-        if (inPost) {
-            dispatch(fetchCommentsByPost(postId))
-        } else {
-            dispatch(fetchLastComments())
-        }
-    }, [])
-
-    return (
-        <div className={styles.comments}>
-            <div className={styles.headerRow}>
-                <h3 className={styles.header}>Комментарии</h3>
-            </div>
-            <div key={Date.now()} className={styles.commentRows}>
-                {isCommentsLoading
-                    ?
-                    [...Array(5)].map(() => <CommentSkeleton key={Math.random()} />)
-                    :
-                    comments.items.map(comment =>
-                        inPost
-                            ?
-                            <CommentExcerpt
-                                key={comment._id}
-                                comment={comment}
-                                isOwner={userData?._id === comment.user._id}
-                                inPost={inPost}
-                                setCommentsAmount={setCommentsAmount}
-                            />
-                            :
-                            <Link
-                                key={comment._id}
-                                to={`/posts/${comment.post}/comment/${comment._id}`}
-                            >
-                                <CommentExcerpt
-                                    comment={comment}
-                                    isOwner={userData?._id === comment.user._id}
-                                    inPost={inPost}
-                                />
-                            </Link>
-                    )
-                }
-            </div>
-        </div>
-    );
-};
-
-export default Comments;
+export default CommentExcerpt;

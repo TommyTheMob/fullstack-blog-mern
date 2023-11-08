@@ -26,6 +26,79 @@
     filter: invert(46%) sepia(45%) saturate(4711%) hue-rotate(196deg) brightness(101%) contrast(98%);
 }
 
+.burgerButton {
+    font-size: 2rem;
+
+    color: #424242;
+
+    padding: .2rem .5rem;
+
+    border: 2px solid #eee;
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.burgerButton:hover {
+    background: #eee;
+
+    color: #9d9d9d;
+}
+
+.burgerMenu {
+    z-index: 9999999;
+
+    background: rgba(204, 204, 204, 0.5);
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: .5s;
+}
+
+.burgerMenu.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.burgerContent {
+    background: white;
+
+    width: 25vw;
+    height: 100vh;
+
+    padding: 1rem;
+
+    transform: translateX(-10rem);
+
+    transition: all .5s;
+}
+
+.burgerContent > .btns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 1rem 0;
+}
+
+.burgerContent .createAccBtn {
+    margin-top: .5rem;
+}
+
+.burgerContent.active {
+    transform: translateX(0);
+}
+
 .userInfo {
     display: flex;
     justify-content: center;
@@ -56,3 +129,17 @@
 .createAccBtn {
 
 }
+
+@media (max-width: 1920px) {}
+
+@media (max-width: 1280px) {}
+
+@media (max-width: 960px) {}
+
+@media (max-width: 640px) {
+    .burgerContent {
+        width: 50vw;
+    }
+}
+
+@media (max-width: 320px) {}

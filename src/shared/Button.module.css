@@ -28,6 +28,8 @@
 .primary:hover {
     background: white;
     color: #2389fd;
+    /*background: #1a5daf;*/
+    /*border: 2px solid #1a5daf;*/
 }
 
 .primaryOutlined {
@@ -50,4 +52,15 @@
 .secondary:hover {
     background: #fff;
     color: #9d9d9d;
+}
+
+.danger {
+    border: 2px solid #ff3131;
+    background: #ff3131;
+    color: white;
+}
+
+.danger:hover {
+    background: white;
+    color: #ff3131;
 }

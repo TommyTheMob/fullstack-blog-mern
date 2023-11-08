@@ -81,3 +81,51 @@
 .toMainBtn {
     margin-left: .2rem;
 }
+
+@media (max-width: 1920px) {
+
+}
+
+@media (max-width: 1280px) {
+
+}
+
+@media (max-width: 960px) {
+    .pageContentWrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .posts {
+        order: 2;
+
+        align-self: stretch;
+
+        width: auto;
+
+        padding: 0 .5rem;
+        margin-right: 0;
+    }
+
+    .btns {
+        left: .5rem;
+    }
+
+    .side {
+        order: 1;
+
+        align-self: stretch;
+
+        width: auto;
+
+        padding: 0 .5rem;
+        margin-bottom: 2rem;
+    }
+
+}
+
+@media (max-width: 640px) {
+
+}
+
+@media (max-width: 320px) {  }

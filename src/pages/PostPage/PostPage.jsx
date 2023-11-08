@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styles from './PostPage.module.css'
 import Post from "../../components/Post/Post.jsx";
 import AddComment from "../../components/AddComment/AddComment.jsx";
-import Comments from "../../components/Comments/Comments.jsx";
+import Comments from "../../components/Commentaries/Comments/Comments.jsx";
 import {Link, useParams} from "react-router-dom";
 import axios from "../../axios.js";
 import PostSkeleton from "../../components/PostSkeleton/PostSkeleton.jsx";

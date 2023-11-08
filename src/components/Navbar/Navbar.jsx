@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './Navbar.module.css'
 import btnStyles from '../../shared/Button.module.css'
 import classNames from "classnames";
@@ -7,11 +7,85 @@ import {Link, Outlet} from "react-router-dom";
 import logo from '../../assets/blog-logo.svg'
 import {useDispatch, useSelector} from "react-redux";
 import {logout, selectIsAuth} from "../../redux/slices/authSlice.js";
+import {GiHamburgerMenu} from "react-icons/gi";
+
+
+const ContentInner = ({ isAuth, userData }) => {
+    const dispatch = useDispatch()
+
+    return (
+        <>
+            {isAuth &&
+                <div className={styles.userInfo}>
+                    <img
+                        className={styles.avatar}
+                        src={userData?.avatarUrl ? userData.avatarUrl : 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'}
+                        alt="user avatar"
+                    />
+                    <span className={styles.name}>{userData?.fullName}</span>
+                </div>
+            }
+            <div className={styles.btns}>
+                {isAuth
+                    ?
+                    <>
+                        <Link to='/add-post'>
+                            <button
+                                className={classNames(btnStyles.btn, btnStyles.primary, styles.loginBtn)}
+                            >
+                                Написать статью
+                            </button>
+                        </Link>
+                        <button
+                            className={classNames(btnStyles.btn, btnStyles.danger, styles.createAccBtn)}
+                            onClick={() => dispatch(logout())}
+                        >
+                            Выйти
+                        </button>
+
+                    </>
+                    :
+                    <>
+                        <Link to='/login'>
+                            <button
+                                className={classNames(btnStyles.btn, btnStyles.primary, styles.loginBtn)}
+                            >
+                                Войти
+                            </button>
+                        </Link>
+                        <Link to='/register'>
+                            <button
+                                className={classNames(btnStyles.btn, btnStyles.primary, styles.createAccBtn)}
+                            >
+                                Создать аккаунт
+                            </button>
+                        </Link>
+                    </>
+                }
+            </div>
+        </>
+
+    )
+}
 
 const Navbar = () => {
-    const dispatch = useDispatch()
     const isAuth = useSelector(selectIsAuth)
     const userData = useSelector(state => state.auth.data)
+
+    const [windowWith, setWindowWith] = useState(window.innerWidth)
+    const [burgerActive, setBurgerActive] = useState(false)
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize)
+
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
+
+    const handleResize = () => {
+        setWindowWith(window.innerWidth)
+    }
 
     return (
         <>
@@ -24,57 +98,27 @@ const Navbar = () => {
                             alt="logo"
                         />
                     </Link>
-                    {isAuth &&
-                        <div className={styles.userInfo}>
-                            <img
-                                className={styles.avatar}
-                                src={userData?.avatarUrl ? userData.avatarUrl : 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'}
-                                alt="user avatar"
+                    {windowWith > 960
+                        ? <ContentInner isAuth={isAuth} userData={userData} />
+                        :
+                        <>
+                            <GiHamburgerMenu
+                                className={styles.burgerButton}
+                                onClick={() => setBurgerActive(prev => !prev)}
                             />
-                            <span className={styles.name}>{userData?.fullName}</span>
-                        </div>
+                            <div
+                                className={burgerActive ? classNames(styles.burgerMenu, styles.active) : styles.burgerMenu}
+                                onClick={() => setBurgerActive(false)}
+                            >
+                                <div className={burgerActive ? classNames(styles.burgerContent, styles.active) : styles.burgerContent}>
+                                    <ContentInner isAuth={isAuth} userData={userData} />
+                                </div>
+                            </div>
+                        </>
                     }
-                    <div className={styles.btns}>
-                        {isAuth
-                            ?
-                            <>
-                                <Link to='/add-post'>
-                                    <button
-                                        className={classNames(btnStyles.btn, btnStyles.primary, styles.loginBtn)}
-                                    >
-                                        Написать статью
-                                    </button>
-                                </Link>
-                                <button
-                                    className={classNames(btnStyles.btn, btnStyles.primaryOutlined, styles.createAccBtn)}
-                                    onClick={() => dispatch(logout())}
-                                >
-                                    Выйти
-                                </button>
-
-                            </>
-                            :
-                            <>
-                                <Link to='/login'>
-                                    <button
-                                        className={classNames(btnStyles.btn, btnStyles.primaryOutlined, styles.loginBtn)}
-                                    >
-                                        Войти
-                                    </button>
-                                </Link>
-                                <Link to='/register'>
-                                    <button
-                                        className={classNames(btnStyles.btn, btnStyles.primary, styles.createAccBtn)}
-                                    >
-                                        Создать аккаунт
-                                    </button>
-                                </Link>
-                            </>
-                        }
-                    </div>
                 </div>
             </header>
-            <Outlet/>
+            <Outlet />
         </>
 
     );

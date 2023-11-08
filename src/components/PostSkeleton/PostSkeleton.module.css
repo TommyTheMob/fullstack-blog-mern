@@ -140,3 +140,25 @@
         box-shadow: inset 0 0 50px rgba(171, 171, 171, 0.7); /* Завершение с начальным свечением */
     }
 }
+
+@media (max-width: 1920px) {}
+
+@media (max-width: 1280px) {
+    .post {
+        width: 30rem;
+    }
+}
+
+@media (max-width: 960px) {
+    .post {
+        width: auto;
+    }
+}
+
+@media (max-width: 640px) {
+
+}
+
+@media (max-width: 320px) {
+
+}

@@ -108,8 +108,9 @@ const Post = ({single, post, isOwner, commentsAmount}) => {
                                     key={tag}
                                     className={styles.tag}
                                     onClick={(event) => onTagInPostClick(event, tag)}
+                                    title={tag}
                                 >
-                                    #{tag}
+                                    #{tag.length > 10 ? tag.slice(0,10) + '...' : tag}
                                 </span>
                             ))
                             : <span>no tags</span>

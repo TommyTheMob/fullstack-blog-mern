@@ -3,7 +3,7 @@ import styles from './HomePage.module.css'
 import styleBtns from '../../shared/Button.module.css'
 import Post from "../../components/Post/Post.jsx";
 import Tags from "../../components/Tags/Tags.jsx";
-import Comments from "../../components/Comments/Comments.jsx";
+import Comments from "../../components/Commentaries/Comments/Comments.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchPosts, fetchTags, setSort} from "../../redux/slices/postsSlice.js";
 import PostSkeleton from "../../components/PostSkeleton/PostSkeleton.jsx";
@@ -39,6 +39,7 @@ const HomePage = () => {
     const onPopBtnClick = () => {
         dispatch(setSort('pop'))
     }
+
 
     return (
         <main className={styles.pageContent}>
