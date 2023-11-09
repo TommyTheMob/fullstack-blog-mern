@@ -151,3 +151,20 @@
         box-shadow: inset 0 0 50px rgba(171, 171, 171, 0.7); /* Завершение с начальным свечением */
     }
 }
+
+@media (max-width: 420px) {
+    .form {
+        min-width: auto;
+        width: 100%;
+    }
+
+    .form h1 {
+        font-size: 1.2rem;
+    }
+
+    .email label,
+    .password label,
+    .name label {
+        font-size: .9rem;
+    }
+}

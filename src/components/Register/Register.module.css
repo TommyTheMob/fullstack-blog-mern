@@ -12,3 +12,13 @@
 .link {
     color: #2389fd;
 }
+
+@media (max-width: 420px) {
+    .register {
+        padding: 0 1rem;
+    }
+
+    .tip {
+        text-align: center;
+    }
+}
