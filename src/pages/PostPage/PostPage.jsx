@@ -47,7 +47,7 @@ const PostPage = () => {
                         </button>
                     </Link>
                     {isLoading
-                        ? <PostSkeleton/>
+                        ? <PostSkeleton inPost={Boolean(id)} />
                         : <Post single={true} post={post} commentsAmount={commentsAmount}
                                 isOwner={userData?._id === post.user._id}/>
                     }

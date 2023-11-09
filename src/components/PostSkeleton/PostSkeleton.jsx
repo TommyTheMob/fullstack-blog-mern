@@ -4,9 +4,10 @@ import {Link} from "react-router-dom";
 import {AiFillEdit, AiOutlineClose, AiOutlineEye} from "react-icons/ai";
 import {PiChatTextLight} from "react-icons/pi";
 
-const PostSkeleton = () => {
+const PostSkeleton = ({ inPost }) => {
     return (
         <div
+            style={inPost ? {width: 'auto'} : {}}
             className={styles.post}
         >
             <div className={styles.imgContainer} />
