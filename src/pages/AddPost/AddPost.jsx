@@ -93,7 +93,7 @@ const AddPost = () => {
         try {
             setIsPostUploading(true)
 
-            const fields = {title, text, imageUrl, tags: tags.split(/,\s*/)}
+            const fields = {title, text, imageUrl, tags: tags.length > 0 ? tags.split(/,\s*/) : []}
             const {data} = isEditing
                 ? await axios.patch(`/posts/${id}`, fields)
                 : await axios.post('/posts', fields)
@@ -101,8 +101,9 @@ const AddPost = () => {
             const _id = isEditing ? id : data._id
             navigate(`/posts/${_id}`)
         } catch (err) {
+            const warns = err.response.data.map(obj => obj.msg).join('\n')
             console.warn(err)
-            alert('Ошибка при создании статьи')
+            alert(`Ошибка при создании статьи:\n${warns}`)
         } finally {
             setIsPostUploading(false)
         }
@@ -163,10 +164,10 @@ const AddPost = () => {
                             />
                         </div>
                         <div className={styles.tags}>
-                            <label htmlFor="header">Тэги</label>
+                            <label htmlFor="tags">Тэги</label>
                             <input
                                 type="text"
-                                id='header'
+                                id='tags'
                                 placeholder='Введите теги через запятую...'
                                 value={tags}
                                 onChange={(e) => setTags(e.target.value)}
