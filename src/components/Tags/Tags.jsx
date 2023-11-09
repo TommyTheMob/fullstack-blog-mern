@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import styles from './Tags.module.css'
 import {PiHashBold} from "react-icons/pi";
-import Loader from "../../shared/Loader/Loader.jsx";
 import classNames from "classnames";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setSort} from "../../redux/slices/postsSlice.js";
 import {Swiper, SwiperSlide} from "swiper/react";

@@ -177,15 +177,45 @@
     .postMulti {
         width: 30rem;
     }
+
+    .imgContainer {
+        max-height: 600px;
+    }
+
+    .img {
+        max-width: 100%;
+    }
 }
 
 @media (max-width: 960px) {
     .postMulti {
         width: auto;
     }
+
+    .img {
+        width: auto;
+    }
 }
 
 @media (max-width: 640px) {
+    .postSingle .header {
+        padding: 0;
+    }
+
+    .postSingle .tagsContainer {
+        padding: 0;
+    }
+
+    .postSingle .reactions {
+        padding: 0;
+    }
+
+    .postSingle .textContainer {
+        margin-left: 0;
+
+        font-size: .9rem;
+    }
+
     .avatar {
         width: 30px;
         height: 30px;

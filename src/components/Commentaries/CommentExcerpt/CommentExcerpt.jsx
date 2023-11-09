@@ -16,6 +16,16 @@ const CommentExcerpt = ({comment, isOwner, inPost, setCommentsAmount, windowWidt
     const [isEditing, setIsEditing] = useState(false)
     const [text, setText] = useState('')
 
+    const commentText = inPost
+        ? {__html: comment.text}
+        :
+        windowWidth > 960
+            ? comment.text.length > 35 ? {__html: `${comment.text.slice(0, 35)}...`} : {__html: comment.text}
+            :
+            windowWidth < 480
+                ? comment.text.length > 10 ? {__html: `${comment.text.slice(0, 10)}...`} : {__html: comment.text}
+                : comment.text.length > 15 ? {__html: `${comment.text.slice(0, 15)}...`} : {__html: comment.text}
+
     const onDeleteBtnClick = () => {
         if (window.confirm('Удалить комментарий?')) {
             dispatch(fetchDeleteComment(comment._id))
@@ -33,6 +43,7 @@ const CommentExcerpt = ({comment, isOwner, inPost, setCommentsAmount, windowWidt
             navigate(`/posts/${comment.post}/comment/${comment._id}`)
         }
     }
+
 
     return (
         <>
@@ -97,14 +108,8 @@ const CommentExcerpt = ({comment, isOwner, inPost, setCommentsAmount, windowWidt
                         </div>
                         <span
                             className={styles.text}
-                            dangerouslySetInnerHTML={
-                                inPost
-                                    ? {__html: comment.text}
-                                    :
-                                    windowWidth < 480
-                                        ? comment.text.length > 15 ? {__html: `${comment.text.slice(0, 15)}...`} : {__html: comment.text}
-                                        : comment.text.length > 35 ? {__html: `${comment.text.slice(0, 35)}...`} : {__html: comment.text}
-                            }
+                            style={inPost ? {position: 'static'} : {}}
+                            dangerouslySetInnerHTML={commentText}
                         />
                     </div>
                 </div>

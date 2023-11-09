@@ -27,3 +27,32 @@
 
 .comments {
 }
+
+@media (max-width: 1920px) {}
+
+@media (max-width: 1280px) {
+    .pageContentWrapper {
+        max-width: 800px;
+    }
+}
+
+@media (max-width: 960px) {
+    .pageContentWrapper {
+        max-width: none;
+        width: 100%;
+
+        display: block;
+    }
+
+    .post {
+        padding: 0 1rem;
+    }
+
+    .comments {
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 640px) {}
+
+@media (max-width: 320px) {}

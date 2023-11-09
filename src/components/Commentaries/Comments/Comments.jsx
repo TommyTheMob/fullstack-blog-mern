@@ -63,11 +63,16 @@ const Comments = ({inPost, postId, setCommentsAmount}) => {
             if (windowWidth > 960) {
                 whatToRender = [...renderComments]
             } else {
-                const slides =  windowWidth < 730 ? 1.3 : 2.3
+                // const slides =  windowWidth < 730 ? 1.3 : 2.3
+                const slides = windowWidth > 730
+                    ? 3.3
+                    : windowWidth > 500
+                        ? 2.3
+                        : 1.3
 
                 whatToRender =
                     <Swiper
-                        spaceBetween={25}
+                        spaceBetween={5}
                         slidesPerView={slides}
                     >
                         {renderComments.map(comm => (<SwiperSlide key={Math.random()}>{ comm }</SwiperSlide>))}
