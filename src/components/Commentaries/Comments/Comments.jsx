@@ -65,9 +65,9 @@ const Comments = ({inPost, postId, setCommentsAmount}) => {
             } else {
                 // const slides =  windowWidth < 730 ? 1.3 : 2.3
                 const slides = windowWidth > 730
-                    ? 3.3
-                    : windowWidth > 500
-                        ? 2.3
+                    ? 2.3
+                    : windowWidth > 680
+                        ? 1.7
                         : 1.3
 
                 whatToRender =

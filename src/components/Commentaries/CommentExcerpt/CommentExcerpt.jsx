@@ -22,9 +22,9 @@ const CommentExcerpt = ({comment, isOwner, inPost, setCommentsAmount, windowWidt
         windowWidth > 960
             ? comment.text.length > 35 ? {__html: `${comment.text.slice(0, 35)}...`} : {__html: comment.text}
             :
-            windowWidth < 480
-                ? comment.text.length > 10 ? {__html: `${comment.text.slice(0, 10)}...`} : {__html: comment.text}
-                : comment.text.length > 15 ? {__html: `${comment.text.slice(0, 15)}...`} : {__html: comment.text}
+            windowWidth < 320
+                ? comment.text.length > 20 ? {__html: `${comment.text.slice(0, 20)}...`} : {__html: comment.text}
+                : comment.text.length > 35 ? {__html: `${comment.text.slice(0, 35)}...`} : {__html: comment.text}
 
     const onDeleteBtnClick = () => {
         if (window.confirm('Удалить комментарий?')) {

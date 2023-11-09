@@ -111,9 +111,6 @@
         font-size: .9rem;
     }
 
-}
-
-@media (max-width: 320px) {
     .commentRow {
         position: relative;
     }
@@ -123,4 +120,9 @@
         top: 2.5rem;
         left: .5rem;
     }
+
+}
+
+@media (max-width: 320px) {
+
 }
