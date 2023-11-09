@@ -51,7 +51,7 @@ const Tags = ({tags, isTagsLoading}) => {
             </div>
         ))
 
-        if (windowWidth < 960) {
+        if (windowWidth <= 960) {
             const slides = windowWidth > 730
                 ? 3.3
                 : windowWidth > 500

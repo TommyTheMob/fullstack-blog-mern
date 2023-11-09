@@ -145,7 +145,7 @@ const AddPost = () => {
                                         <img src={imageUrl} alt="post image"/>
                                     </div>
                                     <button
-                                        className={classNames(btnStyles.btn, btnStyles.primaryOutlined)}
+                                        className={classNames(btnStyles.btn, btnStyles.danger)}
                                         onClick={onDeleteBtnClick}
                                     >
                                         Удалить

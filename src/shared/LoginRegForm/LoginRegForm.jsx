@@ -46,7 +46,7 @@ const LoginRegForm = ({title, handleClick}) => {
                 alert('Ошибка загрузки аватара')
             },
             async () => {
-                const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                const downloadURL = await getDownloadURL(uploadTask.snapshot.ref)
                 setAvatarUrl(downloadURL)
                 setIsUploading(false)
                 setAvatarTip(false)
@@ -106,7 +106,7 @@ const LoginRegForm = ({title, handleClick}) => {
                                         alt="avatar"
                                     />
                                     <span
-                                        className={avatarTip ? classNames(styles.avatarTip, styles.visible) : styles.avatarTip}>+</span>
+                                        className={classNames(styles.avatarTip, styles.visible)}>+</span>
                                 </div>
                             </>
                     }

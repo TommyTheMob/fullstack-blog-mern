@@ -6,15 +6,13 @@
 }
 
 .pageContentWrapper {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding: 1rem;
 
     display: flex;
     justify-content: start;
     flex-direction: column;
 
-    width: auto;
-    max-width: 1024px;
+    width: 65%;
 }
 
 .post {
@@ -32,24 +30,13 @@
 
 @media (max-width: 1280px) {
     .pageContentWrapper {
-        max-width: 800px;
+        width: 75%;
     }
 }
 
 @media (max-width: 960px) {
     .pageContentWrapper {
-        max-width: none;
         width: 100%;
-
-        display: block;
-    }
-
-    .post {
-        padding: 0 1rem;
-    }
-
-    .comments {
-        padding: 0 1rem;
     }
 }
 

@@ -71,7 +71,7 @@ const Post = ({single, post, isOwner, commentsAmount}) => {
                 />
                 {post.imageUrl &&
                     <div
-                        className={single ? styles.imgContainer : classNames(styles.imgContainer, styles.imgContainerMulti)}>
+                        className={single ? styles.imgContainer : styles.imgContainerMulti}>
                         <img
                             className={single ? styles.img : styles.imgMulti}
                             src={post.imageUrl}
