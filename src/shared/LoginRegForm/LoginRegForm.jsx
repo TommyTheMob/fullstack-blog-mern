@@ -5,12 +5,13 @@ import classNames from "classnames";
 import {BsTrash} from "react-icons/bs";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../../firebase.js";
+import {useInput} from "../../hooks/useInput.js";
 
 const LoginRegForm = ({title, handleClick}) => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [fullName, setFullName] = useState('')
     const [avatarUrl, setAvatarUrl] = useState('')
+    const email = useInput('', {isEmpty: true, minLength: 3, isEmail: true})
+    const password = useInput('', {isEmpty: true, minLength: 5, maxLength: 10})
+    const fullName = useInput('', {isEmpty: true, minLength: 3})
 
     const [avatarTip, setAvatarTip] = useState(false)
     const [isUploading, setIsUploading] = useState(false)
@@ -84,7 +85,7 @@ const LoginRegForm = ({title, handleClick}) => {
                         isUploading
                             ?
                             <div className={styles.avatar}>
-                                <div className={styles.avatarSkeleton} />
+                                <div className={styles.avatarSkeleton}/>
                             </div>
                             :
                             <>
@@ -110,23 +111,52 @@ const LoginRegForm = ({title, handleClick}) => {
                                 </div>
                             </>
                     }
-                        <div className={styles.name}>
-                            <label htmlFor="name">Имя</label>
-                            <input type="text" id='name' value={fullName}
-                                   onChange={(e) => setFullName(e.target.value)}/>
-                        </div>
+                    <div className={styles.name}>
+                        <label htmlFor="name">Имя</label>
+                        {fullName.isDirty && fullName.isEmpty && <div style={{color: "red", fontSize: ".8rem"}}>Поле не может быть пустым</div>}
+                        {fullName.isDirty && fullName.minLengthError && <div style={{color: "red", fontSize: ".8rem"}}>Имя не меньше трех символов</div>}
+                        <input
+                            type="text"
+                            id='name'
+                            value={fullName.value}
+                            onChange={(e) => fullName.onChange(e)}
+                            onBlur={(e) => fullName.onBlur(e)}
+                        />
+                    </div>
                 </>
             }
             <div className={styles.email}>
                 <label htmlFor="email">Почта</label>
-                <input type="email" id='email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+                {email.isDirty && email.isEmpty && <div style={{color: "red", fontSize: ".8rem"}}>Поле не может быть пустым</div>}
+                {email.isDirty && email.emailError && <div style={{color: "red", fontSize: ".8rem"}}>Почта введена неверно</div>}
+                <input
+                    type="email"
+                    id='email'
+                    value={email.value}
+                    onChange={(e) => email.onChange(e)}
+                    onBlur={(e) => email.onBlur(e)}
+                />
             </div>
             <div className={styles.password}>
                 <label htmlFor="password">Пароль</label>
-                <input type="password" id='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                {password.isDirty && password.isEmpty && <div style={{color: "red", fontSize: ".8rem"}}>Поле не может быть пустым</div>}
+                {password.isDirty && password.minLengthError && <div style={{color: "red", fontSize: ".8rem"}}>Пароль не меньше пяти символов</div>}
+                {password.isDirty && password.maxLengthError && <div style={{color: "red", fontSize: ".8rem"}}>Пароль слишком длинный</div>}
+                <input
+                    type="password"
+                    id='password'
+                    value={password.value}
+                    onChange={(e) => password.onChange(e)}
+                    onBlur={(e) => password.onBlur(e)}
+                />
             </div>
-            <button className={classes}
-                    onClick={() => handleClick(email, password, fullName, avatarUrl)}>{title}</button>
+            <button
+                className={classes}
+                onClick={() => handleClick(email.value, password.value, fullName.value, avatarUrl)}
+                disabled={title === 'Зарегистрируйтесь' ? !email.inputValid || !fullName.inputValid || !password.inputValid : !email.inputValid || !password.inputValid}
+            >
+                {title}
+            </button>
         </div>
     );
 };
