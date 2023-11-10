@@ -93,7 +93,16 @@ const AddPost = () => {
         try {
             setIsPostUploading(true)
 
-            const fields = {title, text, imageUrl, tags: tags.length > 0 ? tags.split(/,\s*/) : []}
+            let tagsToUpload = []
+            if (tags.length > 0) {
+                tagsToUpload = tags
+                    .toLowerCase()
+                    .split(',')
+                    .map(tag => tag.replace(/\s+/g, ' ').trim())
+                    .filter(Boolean)
+            }
+
+            const fields = {title, text, imageUrl, tags: tagsToUpload}
             const {data} = isEditing
                 ? await axios.patch(`/posts/${id}`, fields)
                 : await axios.post('/posts', fields)
