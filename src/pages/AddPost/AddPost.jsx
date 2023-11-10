@@ -102,7 +102,7 @@ const AddPost = () => {
                     .filter(Boolean)
             }
 
-            const fields = {title, text, imageUrl, tags: tagsToUpload}
+            const fields = {title, text, imageUrl, tags: [...new Set(tagsToUpload)]}
             const {data} = isEditing
                 ? await axios.patch(`/posts/${id}`, fields)
                 : await axios.post('/posts', fields)
