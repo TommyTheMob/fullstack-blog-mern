@@ -10,7 +10,7 @@ import {logout, selectIsAuth} from "../../redux/slices/authSlice.js";
 import {GiHamburgerMenu} from "react-icons/gi";
 
 
-const ContentInner = ({ isAuth, userData }) => {
+const ContentInner = ({ isAuth, userData, windowWidth }) => {
     const dispatch = useDispatch()
 
     return (
@@ -29,7 +29,7 @@ const ContentInner = ({ isAuth, userData }) => {
                 {isAuth
                     ?
                     <>
-                        <Link to='/add-post'>
+                        <Link to='/add-post' style={windowWidth < 960 ? {display: 'none'} :{}}>
                             <button
                                 className={classNames(btnStyles.btn, btnStyles.primary, styles.loginBtn)}
                             >
@@ -38,6 +38,7 @@ const ContentInner = ({ isAuth, userData }) => {
                         </Link>
                         <button
                             className={classNames(btnStyles.btn, btnStyles.danger, styles.createAccBtn)}
+
                             onClick={() => dispatch(logout())}
                         >
                             Выйти
@@ -72,7 +73,7 @@ const Navbar = () => {
     const isAuth = useSelector(selectIsAuth)
     const userData = useSelector(state => state.auth.data)
 
-    const [windowWith, setWindowWith] = useState(window.innerWidth)
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
     const [burgerActive, setBurgerActive] = useState(false)
 
     useEffect(() => {
@@ -84,7 +85,7 @@ const Navbar = () => {
     }, [])
 
     const handleResize = () => {
-        setWindowWith(window.innerWidth)
+        setWindowWidth(window.innerWidth)
     }
 
     return (
@@ -98,10 +99,19 @@ const Navbar = () => {
                             alt="logo"
                         />
                     </Link>
-                    {windowWith > 960
-                        ? <ContentInner isAuth={isAuth} userData={userData} />
+                    {windowWidth > 960
+                        ? <ContentInner isAuth={isAuth} userData={userData} windowWidth={windowWidth} />
                         :
                         <>
+                            {isAuth &&
+                                <Link to='/add-post'>
+                                    <button
+                                        className={classNames(btnStyles.btn, btnStyles.primary, styles.loginBtn)}
+                                    >
+                                        Написать статью
+                                    </button>
+                                </Link>
+                            }
                             <GiHamburgerMenu
                                 className={styles.burgerButton}
                                 onClick={() => setBurgerActive(prev => !prev)}
@@ -111,7 +121,7 @@ const Navbar = () => {
                                 onClick={() => setBurgerActive(false)}
                             >
                                 <div className={burgerActive ? classNames(styles.burgerContent, styles.active) : styles.burgerContent}>
-                                    <ContentInner isAuth={isAuth} userData={userData} />
+                                    <ContentInner isAuth={isAuth} userData={userData} windowWidth={windowWidth} />
                                 </div>
                             </div>
                         </>
