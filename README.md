@@ -19,6 +19,7 @@
     <li>axios</li>
     <li>css-modules</li>
     <li>Vite</li>
+    <li>Firebase</li>
 </ol>
 
 **Backend**
@@ -37,4 +38,4 @@
 
 # Adaptive
 
-Adaptive is in progress...
+Adaptive mostly complete.

@@ -38,7 +38,6 @@ const ContentInner = ({ isAuth, userData, windowWidth }) => {
                         </Link>
                         <button
                             className={classNames(btnStyles.btn, btnStyles.danger, styles.createAccBtn)}
-
                             onClick={() => dispatch(logout())}
                         >
                             Выйти
