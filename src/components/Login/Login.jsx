@@ -17,7 +17,10 @@ const Login = () => {
     }, [isAuth])
 
     const onLogin = async (email, password) => {
-        const data = await dispatch(fetchAuth({email, password}))
+        const data = await dispatch(fetchAuth({
+            email: email.replace(/(&nbsp;|\s)+/g, ' ').trim(),
+            password: password.replace(/(&nbsp;|\s)+/g, ' ').trim()
+        }))
 
         if (!data.payload) {
             return alert('Не удалось авторизоваться')
@@ -30,8 +33,9 @@ const Login = () => {
 
     return (
         <div className={styles.login}>
-            <LoginRegForm title='Войти' handleClick={onLogin} />
-            <span className={styles.tip}>Еще нет аккаунта? <Link className={styles.link} to='/register'>Зарегистрируйтесь</Link> прямо сейчас!</span>
+            <LoginRegForm title='Войти' handleClick={onLogin}/>
+            <span className={styles.tip}>Еще нет аккаунта? <Link className={styles.link}
+                                                                 to='/register'>Зарегистрируйтесь</Link> прямо сейчас!</span>
         </div>
     );
 };

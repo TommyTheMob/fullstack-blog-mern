@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import striptags from "striptags";
 
 export const useValidation = (value, validations) => {
     const [isEmpty, setIsEmpty] = useState(true)
@@ -9,16 +10,20 @@ export const useValidation = (value, validations) => {
     const [inputValid, setInputValid] = useState(false)
 
     useEffect(() => {
+        let noTagsValue = striptags(value)
+        let trimmedValue = noTagsValue.replace(/(&nbsp;|\s)+/g, ' ').trim()
+
         for (const validation in validations) {
             switch (validation) {
                 case 'minLength':
-                    value.length < validations[validation] ? setMinLengthError(true) : setMinLengthError(false)
+                    trimmedValue.length < validations[validation] ? setMinLengthError(true) : setMinLengthError(false)
                     break
                 case 'isEmpty':
-                    value ? setIsEmpty(false) : setIsEmpty(true)
+                    const reg = /\S/
+                    reg.test(trimmedValue) ? setIsEmpty(false) : setIsEmpty(true)
                     break
                 case 'maxLength':
-                    value.length > validations[validation] ? setMaxLengthError(true) : setMaxLengthError(false)
+                    trimmedValue.length > validations[validation] ? setMaxLengthError(true) : setMaxLengthError(false)
                     break
                 case 'isEmail':
                     const re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/

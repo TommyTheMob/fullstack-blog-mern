@@ -11,6 +11,7 @@ import {ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {storage} from "../../firebase.js";
 import Loader from "../../shared/Loader/Loader.jsx";
 import styleBtns from "../../shared/Button.module.css";
+import {useInput} from "../../hooks/useInput.js";
 
 const AddPost = () => {
     const isAuth = useSelector(selectIsAuth)
@@ -25,10 +26,10 @@ const AddPost = () => {
 
     const isEditing = Boolean(id)
 
-    const [text, setText] = useState('')
-    const [title, setTitle] = useState('')
-    const [tags, setTags] = useState('')
-    const [imageUrl, setImageUrl] = useState('');
+    const [imageUrl, setImageUrl] = useState('')
+    const text = useInput('', {isEmpty: true, minLength: 10, maxLength: 2000})
+    const title = useInput('', {isEmpty: true, minLength: 3, maxLength: 80})
+    const tags = useInput('', {isEmpty: true, minLength: 3, maxLength: 100})
 
     useEffect(() => {
         if (!window.localStorage.getItem('token') && !isAuth) {
@@ -40,9 +41,9 @@ const AddPost = () => {
         if (id) {
             axios.get(`/posts/${id}`)
                 .then(({data}) => {
-                    setTitle(data.title)
-                    setText(data.text)
-                    setTags(data.tags.join(', '))
+                    title.insertValue(data.title)
+                    text.insertValue(data.text)
+                    tags.insertValue(data.tags.join(', '))
                     setImageUrl(data.imageUrl)
                 })
                 .catch(err => {
@@ -94,15 +95,20 @@ const AddPost = () => {
             setIsPostUploading(true)
 
             let tagsToUpload = []
-            if (tags.length > 0) {
-                tagsToUpload = tags
+            if (tags.value.length > 0) {
+                tagsToUpload = tags.value
                     .toLowerCase()
                     .split(',')
                     .map(tag => tag.replace(/\s+/g, ' ').trim())
                     .filter(Boolean)
             }
 
-            const fields = {title, text, imageUrl, tags: [...new Set(tagsToUpload)]}
+            const fields = {
+                title: title.value.replace(/(&nbsp;|\s)+/g, ' ').trim(),
+                text: text.value.replace(/(&nbsp;|\s)+/g, ' ').trim(),
+                imageUrl,
+                tags: [...new Set(tagsToUpload)]
+            }
             const {data} = isEditing
                 ? await axios.patch(`/posts/${id}`, fields)
                 : await axios.post('/posts', fields)
@@ -164,26 +170,46 @@ const AddPost = () => {
                         </div>
                         <div className={styles.header}>
                             <label htmlFor="header">Заголовок</label>
+                            {title.isDirty && title.isEmpty &&
+                                <div style={{color: "red", fontSize: ".8rem"}}>Поле не может быть пустым</div>}
+                            {title.isDirty && title.minLengthError &&
+                                <div style={{color: "red", fontSize: ".8rem"}}>Минимум три символа</div>}
+                            {title.isDirty && title.maxLengthError &&
+                                <div style={{color: "red", fontSize: ".8rem"}}>Не более 80 символов</div>}
                             <input
                                 type="text"
                                 id='header'
                                 placeholder='Введите заголовок...'
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
+                                value={title.value}
+                                onChange={(e) => title.onChange(e)}
+                                onBlur={(e) => title.onBlur(e)}
                             />
                         </div>
                         <div className={styles.tags}>
                             <label htmlFor="tags">Тэги</label>
+                            {tags.isDirty && tags.isEmpty &&
+                                <div style={{color: "red", fontSize: ".8rem"}}>Поле не может быть пустым</div>}
+                            {tags.isDirty && tags.minLengthError &&
+                                <div style={{color: "red", fontSize: ".8rem"}}>Минимум три символа</div>}
+                            {tags.isDirty && tags.maxLengthError &&
+                                <div style={{color: "red", fontSize: ".8rem"}}>Не более 100 символов</div>}
                             <input
                                 type="text"
                                 id='tags'
                                 placeholder='Введите теги через запятую...'
-                                value={tags}
-                                onChange={(e) => setTags(e.target.value)}
+                                value={tags.value}
+                                onChange={(e) => tags.onChange(e)}
+                                onBlur={(e) => tags.onBlur(e)}
                             />
                         </div>
                         <div className={styles.text}>
                             <span>Текст статьи</span>
+                            {text.isDirty && text.isEmpty &&
+                                <div style={{color: "red", fontSize: ".8rem"}}>Поле не может быть пустым</div>}
+                            {text.isDirty && text.minLengthError &&
+                                <div style={{color: "red", fontSize: ".8rem"}}>Минимум 10 символов</div>}
+                            {text.isDirty && text.maxLengthError &&
+                                <div style={{color: "red", fontSize: ".8rem"}}>Не более 2000 символов</div>}
                             <div className={styles.editor}>
                                 <Editor
                                     apiKey='8ve8okstzg59eg1ewpa2p85hshxcts8o7dw3ze38wwl38v6r'
@@ -191,9 +217,10 @@ const AddPost = () => {
                                         menubar: false,
                                         placeholder: 'Введите текст...'
                                     }}
-                                    value={text}
+                                    value={text.value}
+                                    onBlur={(e) => text.onBlur(e)}
                                     onEditorChange={(newValue, editor) => {
-                                        setText(editor.getContent())
+                                        text.insertValue(editor.getContent())
                                     }}
                                 />
                             </div>
@@ -201,6 +228,7 @@ const AddPost = () => {
                         <button
                             className={classNames(btnStyles.btn, btnStyles.primary, styles.createBtn)}
                             onClick={onSaveBtnClick}
+                            disabled={!title.inputValid || !text.inputValid || !tags.inputValid}
                         >
                             {isEditing ? 'Сохранить' : 'Опубликовать'}
                         </button>

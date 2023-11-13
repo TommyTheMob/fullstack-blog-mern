@@ -11,6 +11,10 @@ export const useInput = (initialValue, validations) => {
         setValue(e.target.value)
     }
 
+    const insertValue = (text) => {
+        setValue(text)
+    }
+
     const onBlur = (e) => {
         setIsDirty(true)
     }
@@ -18,6 +22,7 @@ export const useInput = (initialValue, validations) => {
     return {
         value,
         onChange,
+        insertValue,
         onBlur,
         isDirty,
         ...valid

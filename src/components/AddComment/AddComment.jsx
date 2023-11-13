@@ -6,16 +6,18 @@ import classNames from "classnames";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useParams} from "react-router-dom";
 import {fetchCreateComment} from "../../redux/slices/commentsSlice.js";
+import {useInput} from "../../hooks/useInput.js";
 
-const AddComment = ({ setCommentsAmount }) => {
+const AddComment = ({setCommentsAmount}) => {
     const dispatch = useDispatch()
     const userData = useSelector(state => state.auth.data)
-    const { id } = useParams()
-    const [text, setText] = useState('')
+    const {id} = useParams()
+
+    const text = useInput('', {isEmpty: true, minLength: 3, maxLength: 500})
 
     const onSubmitBtnClick = () => {
-        dispatch(fetchCreateComment({postId: id, text}))
-        setText('')
+        dispatch(fetchCreateComment({postId: id, text: text.value.replace(/(&nbsp;|\s)+/g, ' ').trim()}))
+        text.insertValue('')
         setCommentsAmount(prev => prev + 1)
     }
 
@@ -25,13 +27,20 @@ const AddComment = ({ setCommentsAmount }) => {
             {userData
                 ?
                 <>
+                    {text.isDirty && text.isEmpty &&
+                        <div style={{color: "red", fontSize: ".8rem"}}>Поле не может быть пустым</div>}
+                    {text.isDirty && text.minLengthError &&
+                        <div style={{color: "red", fontSize: ".8rem"}}>Минимум три символа</div>}
+                    {text.isDirty && text.maxLengthError &&
+                        <div style={{color: "red", fontSize: ".8rem"}}>Не более 500 символов</div>}
                     <div className={styles.editor}>
                         <Editor
                             apiKey='8ve8okstzg59eg1ewpa2p85hshxcts8o7dw3ze38wwl38v6r'
-                            value={text}
+                            value={text.value}
                             onEditorChange={(newValue, editor) => {
-                                setText(editor.getContent())
+                                text.insertValue(editor.getContent())
                             }}
+                            onBlur={(e) => text.onBlur(e)}
                             init={{
                                 menubar: false,
                                 height: '10rem',
@@ -41,13 +50,15 @@ const AddComment = ({ setCommentsAmount }) => {
                     <button
                         onClick={onSubmitBtnClick}
                         className={classNames(btnStyles.btn, btnStyles.primary, styles.sendBtn)}
+                        disabled={!text.inputValid}
                     >
                         Отправить
                     </button>
                 </>
                 :
                 <p className={styles.tipForLogin}>
-                    <Link to='/login'>Войдите</Link> или <Link to='/register'>зарегистрируйтесь</Link>, чтобы оставлять комментарии.
+                    <Link to='/login'>Войдите</Link> или <Link to='/register'>зарегистрируйтесь</Link>, чтобы оставлять
+                    комментарии.
                 </p>
             }
 

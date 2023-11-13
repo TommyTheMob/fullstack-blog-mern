@@ -79,6 +79,8 @@ const Comments = ({inPost, postId, setCommentsAmount}) => {
                     </Swiper>
             }
         }
+    } else {
+        whatToRender = <p style={{marginTop: '.5rem', fontSize: '.9rem', color: '#9d9d9d'}}>Здесь пока нет комментариев...</p>
     }
 
     return (
