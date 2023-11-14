@@ -1,16 +1,30 @@
-# Deployments
+# 🌍Deployments
 
-**Front**: Project available on [Vercel](https://blog-mern-front-livid.vercel.app/)
+**💻Front**: Project available on [Vercel](https://blog-mern-front-livid.vercel.app/)
 
-**Backend**: API is on [Railway](https://blog-mern-backend.up.railway.app/)
+**🔗Backend**: API is on [Railway](https://blog-mern-backend.up.railway.app/)
 
-# Node
+# 🎲Functionality
+
+In _Blog_ you can create an account - add full name, mail, password, avatar.
+You can log in and logout,
+also the system knows were you logged in or not by setting a token in localStorage when you log in or register.
+
+Once you log in you can create a post (add picture, title, tags, text),
+write commentaries to posts, editing / removing your posts and commentaries.
+If you are staying as guest you still can read posts and commentaries,
+filtering posts list by tag (just click on the tag in post or in the tag block on main page)
+or sort it by date or popularity (views count).
+
+On mobile devices for edit / remove your post / comment long tap on post in posts list / post page.
+
+# 📑Node
 
 **Node**: v20.3.1
 
-# Using technologies
+# 🧰Using technologies
 
-**Frontend**
+**🎨Frontend**
 <ol>
     <li>React</li>
     <li>react-router-dom</li>
@@ -22,7 +36,7 @@
     <li>Firebase</li>
 </ol>
 
-**Backend**
+**⚙ Backend**
 <ol>
     <li>Node.js</li>
     <li>Express</li>
@@ -36,6 +50,6 @@
     <li>cors</li>
 </ol>
 
-# Adaptive
+# 📱Adaptive
 
-Adaptive mostly complete.
+Adaptive complete.
