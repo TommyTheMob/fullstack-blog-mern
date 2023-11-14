@@ -20,7 +20,6 @@ export const fetchDeletePost = createAsyncThunk('posts/fetchDeletePost', async (
 const initialState = {
     posts: {
         items: [],
-        sort: 'new',
         status: 'loading'
     },
     tags: {
@@ -32,11 +31,7 @@ const initialState = {
 const postsSlice = createSlice({
     name: 'posts',
     initialState,
-    reducers: {
-        setSort: (state, action) => {
-            state.posts.sort = action.payload
-        },
-    },
+    reducers: {},
     extraReducers: builder => {
         builder
             // fetch posts
@@ -71,7 +66,5 @@ const postsSlice = createSlice({
             })
     }
 })
-
-export const { setSort } = postsSlice.actions
 
 export const postsReducer = postsSlice.reducer

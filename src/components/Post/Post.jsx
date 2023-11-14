@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {parseISO, formatDistanceToNow} from 'date-fns';
 import classNames from "classnames";
 import {useDispatch} from "react-redux";
-import {fetchDeletePost, fetchTags, setSort} from "../../redux/slices/postsSlice.js";
+import {fetchDeletePost, fetchTags} from "../../redux/slices/postsSlice.js";
 import {fetchLastComments} from "../../redux/slices/commentsSlice.js";
 import ActionMenu from "../../shared/ActionMenu/ActionMenu.jsx";
 
@@ -45,7 +45,6 @@ const Post = ({single, post, isOwner, commentsAmount}) => {
 
     const onTagInPostClick = (event, tag) => {
         event.stopPropagation()
-        dispatch(setSort(tag))
         navigate(`/tags/${tag}`)
     }
 

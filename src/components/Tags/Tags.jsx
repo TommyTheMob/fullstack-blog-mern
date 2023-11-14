@@ -3,12 +3,9 @@ import styles from './Tags.module.css'
 import {PiHashBold} from "react-icons/pi";
 import classNames from "classnames";
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {setSort} from "../../redux/slices/postsSlice.js";
 import {Swiper, SwiperSlide} from "swiper/react";
 
 const Tags = ({tags, isTagsLoading}) => {
-    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -26,7 +23,6 @@ const Tags = ({tags, isTagsLoading}) => {
     }
 
     const onTagClick = (tag) => {
-        dispatch(setSort(tag))
         navigate(`/tags/${tag}`)
     }
 

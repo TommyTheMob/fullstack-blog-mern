@@ -1,11 +1,11 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './HomePage.module.css'
 import styleBtns from '../../shared/Button.module.css'
 import Post from "../../components/Post/Post.jsx";
 import Tags from "../../components/Tags/Tags.jsx";
 import Comments from "../../components/Commentaries/Comments/Comments.jsx";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchPosts, fetchTags, setSort} from "../../redux/slices/postsSlice.js";
+import {fetchPosts, fetchTags} from "../../redux/slices/postsSlice.js";
 import PostSkeleton from "../../components/PostSkeleton/PostSkeleton.jsx";
 import classNames from "classnames";
 import {Link, useParams} from "react-router-dom";
@@ -20,36 +20,30 @@ const HomePage = () => {
     const isPostsLoading = posts.status === 'loading'
     const isTagsLoading = tags.status === 'loading'
 
-    const tagRef = useRef(tag)
+    const [isSortByNew, setIsSortByNew] = useState(!tag)
 
     useEffect(() => {
         dispatch(fetchTags())
     }, [])
 
     useEffect(() => {
-        if (tag && tag !== tagRef.current) {
-            dispatch(setSort(tag))
-            tagRef.current = tag
-        } else if (!tag) {
-            dispatch(setSort('new'))
-            tagRef.current = 'new'
+        if (tag) {
+            dispatch(fetchPosts(tag))
+            setIsSortByNew(false)
+        } else {
+            dispatch(fetchPosts('new'))
+            setIsSortByNew(true)
         }
     }, [tag])
 
-    useEffect(() => {
-        if (tag) {
-            dispatch(fetchPosts(tag))
-        } else {
-            dispatch(fetchPosts(posts.sort))
-        }
-    }, [posts.sort])
-
     const onNewBtnClick = () => {
-        dispatch(setSort('new'))
+        dispatch(fetchPosts('new'))
+        setIsSortByNew(true)
     }
 
     const onPopBtnClick = () => {
-        dispatch(setSort('pop'))
+        dispatch(fetchPosts('pop'))
+        setIsSortByNew(false)
     }
 
     return (
@@ -60,13 +54,13 @@ const HomePage = () => {
                         ?
                         <div className={styles.btns}>
                             <button
-                                className={posts.sort === 'new' ? classNames(styles.newBtn, styles.active) : classNames(styles.newBtn)}
+                                className={isSortByNew ? classNames(styles.newBtn, styles.active) : classNames(styles.newBtn)}
                                 onClick={onNewBtnClick}
                             >
                                 Новые
                             </button>
                             <button
-                                className={posts.sort === 'pop' ? classNames(styles.popBtn, styles.active) : classNames(styles.popBtn)}
+                                className={!isSortByNew ? classNames(styles.popBtn, styles.active) : classNames(styles.popBtn)}
                                 onClick={onPopBtnClick}
                             >
                                 Популярные
@@ -75,7 +69,10 @@ const HomePage = () => {
                         :
                         <div className={styles.tagBlock}>
                             <Link to='/'>
-                                <button className={classNames(styleBtns.btn, styleBtns.secondary, styles.toMainBtn)}>
+                                <button
+                                    className={classNames(styleBtns.btn, styleBtns.secondary, styles.toMainBtn)}
+                                    // onClick={onMainPageBtnClick}
+                                >
                                     На главную
                                 </button>
                             </Link>
