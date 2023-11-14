@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import styles from './HomePage.module.css'
 import styleBtns from '../../shared/Button.module.css'
 import Post from "../../components/Post/Post.jsx";
@@ -13,23 +13,35 @@ import {PiHashBold} from "react-icons/pi";
 
 const HomePage = () => {
     const dispatch = useDispatch()
-    const { tag } = useParams()
-    const { posts, tags } = useSelector(state => state.posts)
+    const {tag} = useParams()
+    const {posts, tags} = useSelector(state => state.posts)
     const userData = useSelector(state => state.auth.data)
 
     const isPostsLoading = posts.status === 'loading'
     const isTagsLoading = tags.status === 'loading'
 
-    if (!tag) {
-        posts.sort !== 'pop' && dispatch(setSort('new'))
-    }
+    const tagRef = useRef(tag)
 
     useEffect(() => {
         dispatch(fetchTags())
     }, [])
 
     useEffect(() => {
-        dispatch(fetchPosts(posts.sort))
+        if (tag && tag !== tagRef.current) {
+            dispatch(setSort(tag))
+            tagRef.current = tag
+        } else if (!tag) {
+            dispatch(setSort('new'))
+            tagRef.current = 'new'
+        }
+    }, [tag])
+
+    useEffect(() => {
+        if (tag) {
+            dispatch(fetchPosts(tag))
+        } else {
+            dispatch(fetchPosts(posts.sort))
+        }
     }, [posts.sort])
 
     const onNewBtnClick = () => {
@@ -39,7 +51,6 @@ const HomePage = () => {
     const onPopBtnClick = () => {
         dispatch(setSort('pop'))
     }
-
 
     return (
         <main className={styles.pageContent}>
@@ -77,7 +88,7 @@ const HomePage = () => {
                     {isPostsLoading
                         ?
                         [...Array(5)].map(() => (
-                            <PostSkeleton key={Math.random()} />
+                            <PostSkeleton key={Math.random()}/>
                         ))
                         :
                         posts.items.map(post => (
@@ -86,8 +97,8 @@ const HomePage = () => {
                     }
                 </section>
                 <section className={styles.side}>
-                    <Tags tags={tags.items} isTagsLoading={isTagsLoading} />
-                    <Comments inPost={false} />
+                    <Tags tags={tags.items} isTagsLoading={isTagsLoading}/>
+                    <Comments inPost={false}/>
                 </section>
             </div>
         </main>
