@@ -1,8 +1,8 @@
 # 🌍Deployments
 
-~~**💻Front**: Project available on [Vercel](https://blog-mern-front-livid.vercel.app/)
+~~**💻Front**: Project available on [Vercel](https://blog-mern-front-livid.vercel.app/)~~
 
-**🔗Backend**: API is on [Railway](https://blog-mern-backend.up.railway.app/)~~
+~~**🔗Backend**: API is on [Railway](https://blog-mern-backend.up.railway.app/)~~
 
 💨 Now both on my own [VPS](http://77.73.71.161:4443/). There is no CA, but you can trust me! 😉
 
