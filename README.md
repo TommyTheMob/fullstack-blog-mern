@@ -2,7 +2,7 @@
 
 **💻Front**: https://blog.mbstr.ru
 
-**🔗Backend**: https://blog-api.mbstr.ru
+**🔗Backend**: https://blog-api.mbstr.ru (there's no root "/" endpoint)
 
 # 🎲Functionality
 
