@@ -1,10 +1,8 @@
 # 🌍Deployments
 
-~~**💻Front**: Project available on Vercel~~
+**💻Front**: blog.mbstr.ru
 
-~~**🔗Backend**: API is on Railway~~
-
-💨 Now both on my own [VPS](http://77.73.71.161:4443/). There is no CA, but you can trust me! 😉
+**🔗Backend**: blog-api.mbstr.ru
 
 # 🎲Functionality
 
