@@ -1,8 +1,8 @@
 # 🌍Deployments
 
-**💻Front**: blog.mbstr.ru
+**💻Front**: https://blog.mbstr.ru
 
-**🔗Backend**: blog-api.mbstr.ru
+**🔗Backend**: https://blog-api.mbstr.ru
 
 # 🎲Functionality
 
